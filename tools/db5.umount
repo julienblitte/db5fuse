@@ -1,0 +1,45 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+
+my $dir = "System";
+
+
+
+my $line;
+
+sub usage
+{
+	print STDERR "usage: $0\n\n";
+	print STDERR "Unmount a mounted db5 filesystem.\n";
+	exit 1;
+}
+
+sub locate_mounted_db5fs
+{
+	open(MTAB, "/etc/mtab") || die("error while accessing /etc/mtab");
+	while($line = <MTAB>)
+	{
+		my @fields = split(/ /, $line);
+		if ($fields[0] =~ /^db5fuse$/)
+		{
+			return $fields[1];
+		}
+	}
+	close(MTAB);
+
+	return 0;
+}
+
+
+if (scalar(@ARGV) ne 0)
+{
+	&usage();
+}
+
+my $mounted = &locate_mounted_db5fs || die("unable to find a mounted db5 filesystem!\nIs db5 filesystem mounted?");
+
+print `fusermount -u "$mounted"`;
+

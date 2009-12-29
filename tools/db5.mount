@@ -1,0 +1,55 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+
+my $dir = "System";
+
+
+
+my $line;
+
+sub usage
+{
+	print STDERR "usage: $0 <mountpoint>\n\n";
+	print STDERR "Locate and mount a db5 filesystem to <mountpoint>.\n";
+	print STDERR "<mountpoint> must exist and be a directory.\n";
+	exit 1;
+}
+
+sub locate_db5fs
+{
+	open(MTAB, "/etc/mtab") || die("error while accessing /etc/mtab");
+	while($line = <MTAB>)
+	{
+		my @fields = split(/ /, $line);
+		my $file = $fields[1];
+
+		$file =~ s/\/$//;
+
+		if ( -d "$file/$dir")
+		{
+			close(MTAB);
+			return $file;
+		}
+	}
+	close(MTAB);
+
+	return 0;
+}
+
+
+if (scalar(@ARGV) ne 1)
+{
+	&usage();
+}
+elsif ( ! -d $ARGV[0])
+{
+	&usage();
+}
+
+my $device = &locate_db5fs() || die("unable to find device!\nis fat filesystem mounted?");
+
+print `db5fuse "$device" "$ARGV[0]"`;
+
