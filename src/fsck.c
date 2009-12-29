@@ -122,22 +122,20 @@ void fsck_check(const bool fix)
 
 bool fsck_check_step1(const bool fix)
 {
-	uint32_t local_count, i;
+	uint32_t local_count;
 	
 	/* check number of files */
 	local_count = db5_hdr_count();
 	add_log(ADDLOG_DEBUG, "[fsck]step1", "%u files registered\n", local_count);
 
-	i=0;
-	real_count = CONFIG_MAX_DB5_ENTRY;
-	while(i < CONFIG_MAX_DB5_ENTRY)
+	real_count = 0;
+	while(real_count <= CONFIG_MAX_DB5_ENTRY)
 	{
-		if (!db5_dat_select_row(i, &row))
+		if (!db5_dat_select_row(real_count, &row))
 		{
-			real_count = (i == 0 ? 0 : i-1);
 			break;
 		}
-		i++;
+		real_count++;
 	}
 	add_log(ADDLOG_DEBUG, "[fsck]step1", "%u files are detected\n", real_count);
 

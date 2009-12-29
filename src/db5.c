@@ -93,6 +93,7 @@ bool db5_generate_row(const char *localfile, db5_row *row)
 	/* check file extension */
 	if (ext == NULL)
 	{
+		ext = "";
 		add_log(ADDLOG_RECOVER, "[db5]generate_row", "unable to get extension of '%s'\n", localfile);
 	}
 	if (strcasecmp(ext, CONFIG_ASF_EXT) != 0 && strcasecmp(ext, CONFIG_MPEG_EXT) != 0)
@@ -412,6 +413,7 @@ bool db5_localfile(const char *filename, char *localfile, const size_t localfile
 	if (!db5_longname_to_shortname(filename, shortname, sizeof(shortname)))
 	{
 		add_log(ADDLOG_USER_ERROR, "[db5]localfile", "unable to get short file name for '%s'\n", filename);
+		localfile[0] = '\0';
 		return false;
 	}
 
