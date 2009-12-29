@@ -218,7 +218,7 @@ int fuse_impl_getattr(const char *path, struct stat *attr)
 	check(attr != NULL);
 	check(fuse_get_context() != NULL);
 
-	add_log(ADDLOG_OPERATION, "[fuse]get_attr", "called, args='%s'\n", path);
+	add_log(ADDLOG_OPERATION, "[fuse]getattr", "called, args='%s'\n", path);
 
 	memset(attr, 0, sizeof(attr));
 
@@ -239,7 +239,7 @@ int fuse_impl_getattr(const char *path, struct stat *attr)
 		attr->st_uid = fuse_get_context()->uid;
 		attr->st_gid = fuse_get_context()->gid;
 
-		add_log(ADDLOG_OP_SUCCESS, "[fuse]get_attr", "done.");
+		add_log(ADDLOG_OP_SUCCESS, "[fuse]getattr", "done.");
 
 		/* success */
 		return -ESUCCESS;
@@ -249,7 +249,7 @@ int fuse_impl_getattr(const char *path, struct stat *attr)
 
 	if (!db5_localfile(file_remove_headslash(path), fuse_localfile, sizeof(fuse_localfile)))
 	{
-		add_log(ADDLOG_USER_ERROR, "[fuse]get_attr", "unable to find file '%s'\n", fuse_localfile);
+		add_log(ADDLOG_USER_ERROR, "[fuse]getattr", "unable to find local file for '%s'\n", path);
 		/* file does not exists */
 		return -ENOENT;
 	}
@@ -257,7 +257,7 @@ int fuse_impl_getattr(const char *path, struct stat *attr)
 	if (stat(fuse_localfile, &localattr) != 0)
 	{
 		fuse_error = errno;
-		add_log(ADDLOG_FAIL, "[fuse]get_attr", "unable to get information from local file: %s\n", strerror(fuse_error));
+		add_log(ADDLOG_FAIL, "[fuse]getattr", "unable to get information from local file: %s\n", strerror(fuse_error));
 		log_dump("localfile", fuse_localfile);
 		log_dump("path", path);
 		/* io error */
@@ -279,7 +279,7 @@ int fuse_impl_getattr(const char *path, struct stat *attr)
 	attr->st_uid = fuse_get_context()->uid;
 	attr->st_gid = fuse_get_context()->gid;
 	
-	add_log(ADDLOG_OP_SUCCESS, "[fuse]get_attr", "done.\n");
+	add_log(ADDLOG_OP_SUCCESS, "[fuse]getattr", "done.\n");
 
 	/* success */
 	return -ESUCCESS;
@@ -308,12 +308,9 @@ int fuse_impl_unlink (const char *path)
 
 	if (unlink(fuse_localfile) != 0)
 	{
-		fuse_error = errno;
-		add_log(ADDLOG_FAIL, "[fuse]unlink", "unable to remove local file: %s\n", strerror(fuse_error));
+		add_log(ADDLOG_RECOVER, "[fuse]unlink", "unable to remove local file: %s\n", strerror(fuse_error));
 		log_dump("localfile", fuse_localfile);
 		log_dump("path", path);
-		/* io error */
-		return -fuse_error;
 	}
 
 	add_log(ADDLOG_OP_SUCCESS, "[fuse]unlink", "done.\n");

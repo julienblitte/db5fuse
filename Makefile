@@ -3,6 +3,7 @@ FLAGS=-Wall -I $(INC)
 RM=rm
 UMOUNT=fusermount -u
 FUSE_VER=26
+CP=cp
 DOCUMENT=doxygen > /dev/null
 COMMIT=svn commit
 
@@ -20,7 +21,7 @@ obj_db5=$(SRC)/db5.c $(SRC)/db5_dat.c $(SRC)/db5_hdr.c $(SRC)/db5_idx.c $(SRC)/n
 obj_common=$(SRC)/crc32.c $(SRC)/wstring.c $(SRC)/file.c $(SRC)/utf8.c $(SRC)/logger.c
 obj_fsck=$(SRC)/fsck.c
 
-.PHONY: build test
+.PHONY: build test install
 build: db5fuse fsck
 test: db5 mp3 asf names utf8 crc32 log truncate
 
@@ -35,6 +36,9 @@ crc32: $(BIN)/crc32
 fsck: $(BIN)/fsck.db5
 log: $(BIN)/log
 truncate: $(BIN)/truncate
+
+install: $(BIN)/db5fuse
+	$(CP) $(BIN)/db5fuse /usr/bin
 
 $(BIN)/db5fuse: $(obj_common) $(obj_db5) $(obj_audio) $(obj_fuse)
 	$(CC) -o $@ $(FLAGS) $^ -lfuse -D_FILE_OFFSET_BITS=64 -DFUSE_USE_VERSION=$(FUSE_VER) -lid3tag
