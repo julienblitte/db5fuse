@@ -1,4 +1,5 @@
 CC=gcc
+#FLAGS=-Wall -I $(INC) -g
 FLAGS=-Wall -I $(INC)
 RM=rm
 UMOUNT=fusermount -u
