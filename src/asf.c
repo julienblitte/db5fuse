@@ -49,6 +49,28 @@ typedef struct asf_tag_t
 
 
 /**
+ * @brief compare item1 to item2, 32 bits by 32 bits
+ * @param item1 first element to compare
+ * @param item2 second element to compare
+ * @param size size of shorter item, have to be a multiple of 4
+ * @result true if item1 is equivalent to item2
+ */
+static inline bool compare4(const void *item1, const void *item2, const size_t size)
+{
+	int i;
+
+	for(i=0; i < size/sizeof(uint32_t); i++)
+	{
+		if (((uint32_t *)item1)[i] != ((uint32_t *)item2)[i])
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
  * @brief find the header in an buffer by finding specified guid
  * @param guid the guid of header to find
  * @param buffer the search buffer
@@ -62,23 +84,18 @@ static size_t asf_find_header(const guid_t *guid, const char *buffer, const size
 	check(buffer != NULL);
 	check(len > 0);
 
-	result = 0;
-	while(result < (len - sizeof(guid_t)))
+	/* no enought data */
+	if (len < sizeof(guid_t))
 	{
-		if (*((uint32_t *)(buffer + result)) == ((uint32_t *)guid)[0])
+		return len;
+	}
+
+	for(result = 0; result <= (len - sizeof(guid_t)); result++)
+	{
+		if (compare4(buffer+result, &guid, sizeof(guid_t)))
 		{
-			if (*((uint32_t *)(buffer + result + 4)) == ((uint32_t *)guid)[1])
-			{
-				if (*((uint32_t *)(buffer + result + 8)) == ((uint32_t *)guid)[2])
-				{
-					if (*((uint32_t *)(buffer + result + 12)) == ((uint32_t *)guid)[3])
-					{
-						return result;
-					}
-				}
-			}
+			return result;
 		}
-		result++;
 	}
 
 	return len;
@@ -96,70 +113,11 @@ bool asf_generate_row(const char *filename, db5_row *row)
 	check(filename != NULL);
 	check(row != NULL);
 
-	wma = fopen(filename, "rb");
-	if (wma == NULL)
-	{
-		add_log(ADDLOG_RECOVER, "[asf]gen_row", "unable to open file: %s\n", strerror(errno));
-		log_dump("filename", filename);
-		return false;
-	}
-
-	read = fread(file_common_buffer, 1, sizeof(file_common_buffer), wma);
-	if (read == 0)
-	{
-		add_log(ADDLOG_RECOVER, "[asf]gen_row", "unable to read file: %s\n", strerror(errno));
-		log_dump("filename", filename);
-		fclose(wma);
-		return false;
-	}
-
-	fclose(wma);
-
-	row->filesize = file_filesize(filename);
-
-	position = asf_find_header(&title_artist, file_common_buffer, read);
-	if (position >= read)
-	{
-		add_log(ADDLOG_NOTICE, "[asf]gen_row", "unable to find tag in file '%s'\n", filename);
-		return false;
-	}
-
-	header = (asf_tag *)(file_common_buffer+position);
-
-	if (SIZEOF_TAG + header->title_size + header->artist_size != header->record_size)
-	{
-		add_log(ADDLOG_NOTICE, "[asf]gen_row", "tag size is invalid in file '%s'\n", filename);
-		return EXIT_FAILURE;
-	}
-
-	if ((position + header->record_size) > read)
-	{
-		add_log(ADDLOG_NOTICE, "[asf]gen_row", "tag seems too big in filename '%s'\n", filename);
-		return EXIT_FAILURE;
-	}
-
-	artist = malloc(header->artist_size);
-	check(artist != NULL);
-
-	title = malloc(header->title_size);
-	check(title != NULL);
-
-	memcpy(title, file_common_buffer + position + SIZEOF_TAG, header->title_size);
-	memcpy(artist, file_common_buffer + position + SIZEOF_TAG + header->title_size, header->artist_size);
-
-	ws_wstoa(title, header->title_size);
-	ws_wstoa(artist, header->artist_size);
-
-	strncpy(row->title, title, membersizeof(db5_row, title)/2);
-	strncpy(row->artist, artist, membersizeof(db5_row, artist)/2);
-
-	free(artist);
-	free(title);
+	add_log(ADDLOG_DEBUG, "[asf]gen_row", "preparing information for '%s'\n", filename);
 
 	/* TODO: get real values from WMA file */
 	row->bitrate = 128000;
 	row->samplerate = 44100;
-	row->duration = row->filesize / (row->bitrate / 8);
 
 #ifndef NOJOKE
 	row->year = 1984;
@@ -167,6 +125,73 @@ bool asf_generate_row(const char *filename, db5_row *row)
 
 	strncpy(row->album, "Microsoft WMA", membersizeof(db5_row, album)/2);
 	strncpy(row->genre, "WMA file", membersizeof(db5_row, genre)/2);
+
+	wma = fopen(filename, "rb");
+	if (wma == NULL)
+	{
+		add_log(ADDLOG_RECOVER, "[asf]gen_row", "unable to open file '%s': %s\n", filename, strerror(errno));
+		return true;
+	}
+
+	read = fread(file_common_buffer, 1, sizeof(file_common_buffer), wma);
+	if (read == 0)
+	{
+		add_log(ADDLOG_RECOVER, "[asf]gen_row", "unable to read file '%s'", filename);
+		fclose(wma);
+		return true;
+	}
+
+	fclose(wma);
+
+	row->filesize = file_filesize(filename);
+	row->duration = row->filesize / (row->bitrate / 8);
+
+	position = asf_find_header(&title_artist, file_common_buffer, read);
+	if (position >= read)
+	{
+		add_log(ADDLOG_NOTICE, "[asf]gen_row", "unable to find tag in file '%s'\n", filename);
+		return true;
+	}
+
+	header = (asf_tag *)(file_common_buffer+position);
+
+	if (SIZEOF_TAG + header->title_size + header->artist_size != header->record_size)
+	{
+		add_log(ADDLOG_NOTICE, "[asf]gen_row", "tag size is invalid in file '%s'\n", filename);
+		return true;
+	}
+
+	if ((position + header->record_size) > read)
+	{
+		add_log(ADDLOG_NOTICE, "[asf]gen_row", "tag seems too big in filename '%s'\n", filename);
+		return true;
+	}
+
+	artist = malloc(header->artist_size);
+	if (artist == NULL)
+	{
+		add_log(ADDLOG_RECOVER, "[asf]gen_row", "not enougth memory\n");
+	}
+	else
+	{
+		memcpy(artist, file_common_buffer + position + SIZEOF_TAG + header->title_size, header->artist_size);
+		ws_wstoa(artist, header->artist_size);
+		strncpy(row->artist, artist, membersizeof(db5_row, artist)/2);
+		free(artist);
+	}
+
+	title = malloc(header->title_size);
+	if (title != NULL)
+	{
+		add_log(ADDLOG_RECOVER, "[asf]gen_row", "not enougth memory\n");
+	}
+	else
+	{
+		memcpy(title, file_common_buffer + position + SIZEOF_TAG, header->title_size);
+		ws_wstoa(title, header->title_size);
+		strncpy(row->title, title, membersizeof(db5_row, title)/2);
+		free(title);
+	}
 
 	return true;
 }

@@ -45,6 +45,7 @@ static void names_insert_full(const uint32_t crc32, const char *filename)
 {
 	size_t length;
 
+	check(crc32 != 0);
 	check(filename != NULL);
 
 	if (head == NULL)
@@ -87,6 +88,12 @@ bool names_select_shortname(const char *filename, char *shortname, const size_t 
 	}
 
 	ext = file_get_extension(filename);
+	if (ext == NULL)
+	{
+		add_log(ADDLOG_USER_ERROR, "[names]select_short", "unable to get extension");
+		log_dump_latin1("filename", filename);
+		return false;
+	}
 
 	current = head;
 	while(current != NULL)

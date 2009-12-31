@@ -6,7 +6,6 @@ UMOUNT=fusermount -u
 FUSE_VER=26
 CP=cp
 DOCUMENT=doxygen > /dev/null
-COMMIT=svn commit
 
 # directories
 BIN=bin
@@ -79,6 +78,12 @@ clean:
 doc: 
 	$(DOCUMENT)
 
-.PHONY: commit
+.PHONY: mount umount commit
+mount:
+	tools/db5.mount mnt
+
+umount:
+	tools/db5.umount
+
 commit:
-	$(COMMIT) .
+	svn commit

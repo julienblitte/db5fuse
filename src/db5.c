@@ -284,7 +284,7 @@ bool db5_update(const char *filename)
 	db5_shortname_to_localfile(shortname, localfile, sizeof(localfile));
 
 	/* generate information */
-	if (db5_generate_row(localfile, &row) != true)
+	if (!db5_generate_row(localfile, &row))
 	{
 		add_log(ADDLOG_FAIL, "[db5]update", "unable to generate row from file\n");
 		log_dump("localfile", localfile);
