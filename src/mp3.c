@@ -41,17 +41,14 @@ static bool mp3_generate_row_mpeg_size(const char *filename, db5_row *row)
 	mpeg = fopen(filename, "rb");
 	if (mpeg == NULL)
 	{
-		add_log(ADDLOG_RECOVER, "[mp3]genrow_mpeg_size", "unable to open file: %s\n", strerror(errno));
-		log_dump("filename", filename);
+		add_log(ADDLOG_RECOVER, "[mp3]genrow_mpeg_size", "unable to open file '%s': %s\n", filename, strerror(errno));
 		return false;
 	}
 
 	read = fread(file_common_buffer, 1, sizeof(file_common_buffer), mpeg);
 	if (read == 0)
 	{
-		add_log(ADDLOG_RECOVER, "[mp3]genrow_mpeg_size", "unable to read file: %s\n", strerror(errno));
-		log_dump("filename", filename);
-
+		add_log(ADDLOG_RECOVER, "[mp3]genrow_mpeg_size", "unable to read file '%s'", filename);
 		fclose(mpeg);
 		return false;
 	}
@@ -171,22 +168,20 @@ static bool mp3_generate_row_id3(const char *filename, db5_row *row)
 
 bool mp3_generate_row(const char *filename, db5_row *row)
 {
-	unsigned int result;
-
 	check(filename != NULL);
 	check(row != NULL);
 
-	result = 0;
-	if (mp3_generate_row_mpeg_size(filename, row))
+	add_log(ADDLOG_DEBUG, "[mp3]gen_row", "preparing information for '%s'\n", filename);
+
+	if (!mp3_generate_row_mpeg_size(filename, row))
 	{
-		result++;
+		add_log(ADDLOG_RECOVER, "[mp3]gen_row", "unable to retrieve music length information for '%s'\n", filename);
 	}
-	result <<= 1;
-	if (mp3_generate_row_id3(filename, row))
+	if (!mp3_generate_row_id3(filename, row))
 	{
-		result++;
+		add_log(ADDLOG_RECOVER, "[mp3]gen_row", "unable to retrieve id3 tags for '%s'\n", filename);
 	}
 
-	return (result == 0x03);
+	return true;
 }
 
