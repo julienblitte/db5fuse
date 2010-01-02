@@ -239,7 +239,7 @@ int fuse_impl_getattr(const char *path, struct stat *attr)
 		attr->st_uid = fuse_get_context()->uid;
 		attr->st_gid = fuse_get_context()->gid;
 
-		add_log(ADDLOG_OP_SUCCESS, "[fuse]getattr", "done.");
+		add_log(ADDLOG_OP_SUCCESS, "[fuse]getattr", "done.\n");
 
 		/* success */
 		return -ESUCCESS;

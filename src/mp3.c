@@ -38,17 +38,19 @@ static bool mp3_generate_row_mpeg_size(const char *filename, db5_row *row)
 	check(filename != NULL);
 	check(row != NULL);
 
+	add_log(ADDLOG_DEBUG, "[mp3]gen_row_mpeg_size", "retrieving mpeg information for '%s'\n", filename);
+
 	mpeg = fopen(filename, "rb");
 	if (mpeg == NULL)
 	{
-		add_log(ADDLOG_RECOVER, "[mp3]genrow_mpeg_size", "unable to open file '%s': %s\n", filename, strerror(errno));
+		add_log(ADDLOG_RECOVER, "[mp3]gen_row_mpeg_size", "unable to open file '%s': %s\n", filename, strerror(errno));
 		return false;
 	}
 
 	read = fread(file_common_buffer, 1, sizeof(file_common_buffer), mpeg);
 	if (read == 0)
 	{
-		add_log(ADDLOG_RECOVER, "[mp3]genrow_mpeg_size", "unable to read file '%s'", filename);
+		add_log(ADDLOG_RECOVER, "[mp3]gen_row_mpeg_size", "unable to read file '%s'\n", filename);
 		fclose(mpeg);
 		return false;
 	}
@@ -58,9 +60,9 @@ static bool mp3_generate_row_mpeg_size(const char *filename, db5_row *row)
 	row->filesize = file_filesize(filename);
 
 	offset = mp3_next_frame(file_common_buffer, read);
-	if (offset >= sizeof(file_common_buffer))
+	if (offset >= read)
 	{
-		add_log(ADDLOG_NOTICE, "[mp3]genrow_mpeg_size", "unable to find first frame in file '%s'\n", filename);
+		add_log(ADDLOG_NOTICE, "[mp3]gen_row_mpeg_size", "unable to find first frame in file '%s'\n", filename);
 		return false;
 	}
 
@@ -96,17 +98,19 @@ static bool mp3_generate_row_id3(const char *filename, db5_row *row)
 	check(filename != NULL);
 	check(row != NULL);
 
+	add_log(ADDLOG_DEBUG, "[mp3]gen_row_id3", "retrieving id3 tags for '%s'\n", filename);
+
 	id3 = id3_file_open(filename, ID3_FILE_MODE_READONLY);
 	if (id3 == NULL)
 	{
-		add_log(ADDLOG_RECOVER, "[mp3]genrow_id3", "unable to open file '%s'\n", filename);
+		add_log(ADDLOG_RECOVER, "[mp3]gen_row_id3", "unable to open file '%s'\n", filename);
 		return false;
 	}
 	
 	tag = id3_file_tag(id3);
 	if (tag == NULL)
 	{
-		add_log(ADDLOG_NOTICE, "[mp3]genrow_id3", "not tag found in file '%s'\n", filename);
+		add_log(ADDLOG_NOTICE, "[mp3]gen_row_id3", "not tag found in file '%s'\n", filename);
 	}
 
 	row->year = id3_get_int(tag, ID3_FRAME_YEAR);

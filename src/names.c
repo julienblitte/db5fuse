@@ -90,7 +90,7 @@ bool names_select_shortname(const char *filename, char *shortname, const size_t 
 	ext = file_get_extension(filename);
 	if (ext == NULL)
 	{
-		add_log(ADDLOG_USER_ERROR, "[names]select_short", "unable to get extension");
+		add_log(ADDLOG_USER_ERROR, "[names]select_short", "unable to get extension\n");
 		log_dump_latin1("filename", filename);
 		return false;
 	}
