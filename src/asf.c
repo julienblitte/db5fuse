@@ -136,7 +136,7 @@ bool asf_generate_row(const char *filename, db5_row *row)
 	read = fread(file_common_buffer, 1, sizeof(file_common_buffer), wma);
 	if (read == 0)
 	{
-		add_log(ADDLOG_RECOVER, "[asf]gen_row", "unable to read file '%s'", filename);
+		add_log(ADDLOG_RECOVER, "[asf]gen_row", "unable to read file '%s'\n", filename);
 		fclose(wma);
 		return true;
 	}
