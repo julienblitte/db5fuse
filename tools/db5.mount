@@ -4,11 +4,6 @@ use strict;
 use warnings;
 
 
-my $dir = "System";
-
-
-
-my $line;
 
 sub usage
 {
@@ -21,18 +16,30 @@ sub usage
 sub locate_db5fs
 {
 	open(MTAB, "/etc/mtab") || die("error while accessing /etc/mtab");
-	while($line = <MTAB>)
+
+	while(my $line = <MTAB>)
 	{
 		my @fields = split(/ /, $line);
-		my $file = $fields[1];
+		my ($dev, $mount, $sys, $model);
+		
+		$dev = $fields[0];
+		$mount = $fields[1];
 
-		$file =~ s/\/$//;
+		$mount =~ s/\/$//;
 
-		if ( -d "$file/$dir")
+		if ($sys = `udevadm info -q path -n "$dev" 2> /dev/null`)
 		{
-			close(MTAB);
-			return $file;
+			my @properties = `udevadm info -q property -p $sys 2> /dev/null`;
+			$model = (grep(/ID_MODEL=/, @properties))[0];
+			$model =~ s/^ID_MODEL=//g;
+
+			if ($model =~ m/^HDD/)
+			{
+				close(MTAB);
+				return $mount;
+			}
 		}
+
 	}
 	close(MTAB);
 
