@@ -17,7 +17,7 @@
 #include "db5.h"
 #include "db5_dat.h"
 #include "db5_hdr.h"
-#include "db5_idx.h"
+#include "db5_index.h"
 #include "db5_types.h"
 #include "file.h"
 #include "mp3.h"
@@ -81,7 +81,12 @@ bool db5_generate_row(const char *localfile, db5_row *row)
 
 	add_log(ADDLOG_DUMP, "[db5]generate_row", "building informations for '%s'\n", localfile);
 
+	/* default values */
 	memset(row, 0, sizeof(db5_row));
+	snprintf(row->artist,membersizeof(db5_row, artist)/2, CONFIG_DEFAULT_ARTIST);
+	snprintf(row->album, membersizeof(db5_row, album)/2, CONFIG_DEFAULT_ALBUM);
+	snprintf(row->genre, membersizeof(db5_row, genre)/2, CONFIG_DEFAULT_GENRE);
+	snprintf(row->title, membersizeof(db5_row, title)/2, CONFIG_DEFAULT_TITLE);
 
 	/* charset handling */
 	utf8_iso8859(localfile, localfile_latin1, sizeof(localfile_latin1));
@@ -114,12 +119,6 @@ bool db5_generate_row(const char *localfile, db5_row *row)
 	{
 		add_log(ADDLOG_RECOVER, "[db5]generate_row", "unable to get information from file, default values will be used\n");
 		log_dump("localfile", localfile);
-
-		/* default values */
-		snprintf(row->artist,membersizeof(db5_row, artist)/2, CONFIG_DEFAULT_ARTIST);
-		snprintf(row->album, membersizeof(db5_row, album)/2, CONFIG_DEFAULT_ALBUM);
-		snprintf(row->genre, membersizeof(db5_row, genre)/2, CONFIG_DEFAULT_GENRE);
-		snprintf(row->title, membersizeof(db5_row, title)/2, CONFIG_DEFAULT_TITLE);
 
 		return true;
 	}
@@ -352,49 +351,49 @@ bool db5_index()
 
 	result = 0;
 
-	if (db5_idx_index_str(filename, DB5_IDX_CODE_FILENAME) == true)
+	if (db5_index_colindex(filename, DB5_IDX_CODE_FILENAME))
 	{
 		result++;
 	}
 
 	result <<= 1;
-	if (db5_idx_index_str(filepath, DB5_IDX_CODE_FILEPATH) == true)
+	if (db5_index_colindex(filepath, DB5_IDX_CODE_FILEPATH))
 	{
 		result++;
 	}
 
 	result <<= 1;
-	if (db5_idx_index_str(album, DB5_IDX_CODE_ALBUM) == true)
+	if (db5_index_colindex(album, DB5_IDX_CODE_ALBUM))
 	{
 		result++;
 	}
 
 	result <<= 1;
-	if (db5_idx_index_str(genre, DB5_IDX_CODE_GENRE) == true)
+	if (db5_index_colindex(genre, DB5_IDX_CODE_GENRE))
 	{
 		result++;
 	}
 
 	result <<= 1;
-	if (db5_idx_index_str(title, DB5_IDX_CODE_TITLE) == true)
+	if (db5_index_colindex(title, DB5_IDX_CODE_TITLE))
 	{
 		result++;
 	}
 
 	result <<= 1;
-	if (db5_idx_index_str(artist, DB5_IDX_CODE_ARTIST) == true)
+	if (db5_index_colindex(artist, DB5_IDX_CODE_ARTIST))
 	{
 		result++;
 	}
 
 	result <<= 1;
-	if (db5_idx_index_num(track, DB5_IDX_CODE_TRACK) == true)
+	if (db5_index_colindex(track, DB5_IDX_CODE_TRACK))
 	{
 		result++;
 	}
 
 	result <<= 1;
-	if (db5_idx_index_num(source, DB5_IDX_CODE_SOURCE) == true)
+	if (db5_index_colindex(source, DB5_IDX_CODE_SOURCE))
 	{
 		result++;
 	}

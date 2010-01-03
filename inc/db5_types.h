@@ -63,30 +63,6 @@ typedef struct
 } db5_row;
 
 /**
- * @brief string entry
- */
-typedef struct
-{
-	/** @brief value of entry */
-	char *value;
-	/** @brief position of entry */
-	uint32_t position;
-	/** @brief checksum of entry */
-	uint32_t crc32;
-} db5_string_entry;
-
-/**
- * @brief number entry
- */
-typedef struct
-{
-	/** @brief value of entry */
-	uint32_t value;
-	/** @brief position of entry */
-	uint32_t position;
-} db5_number_entry;
-
-/**
  * @brief the music file path
  */
 extern const char *db5_music_path;

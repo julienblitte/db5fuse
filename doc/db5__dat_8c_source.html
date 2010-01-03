@@ -225,103 +225,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00189"></a>00189         <span class="keywordflow">return</span> <a class="code" href="db5__dat_8h.html#ae2a99c1f3ef10fffbae935e04d0d0cc2" title="magic value returned when a row is not found in database">DB5_ROW_NOT_FOUND</a>;
 <a name="l00190"></a>00190 }
 <a name="l00191"></a>00191 
-<a name="l00192"></a><a class="code" href="db5__dat_8c.html#aadc08892dc769241dc37c4ff3d55b98f">00192</a> <a class="code" href="structdb5__string__entry.html" title="string entry">db5_string_entry</a> *<a class="code" href="db5__dat_8h.html#aadc08892dc769241dc37c4ff3d55b98f" title="extract a string column from database (system)">db5_dat_select_string_column</a>(<span class="keyword">const</span> <span class="keywordtype">size_t</span> reloffset, <span class="keyword">const</span> <span class="keywordtype">size_t</span> size)
-<a name="l00193"></a>00193 {
-<a name="l00194"></a>00194         <a class="code" href="structdb5__string__entry.html" title="string entry">db5_string_entry</a> *result;
-<a name="l00195"></a>00195         <a class="code" href="structdb5__row.html" title="a database row">db5_row</a> row;
-<a name="l00196"></a>00196         uint32_t i, count;
-<a name="l00197"></a>00197         <span class="keywordtype">char</span> *item;
-<a name="l00198"></a>00198         <span class="keywordtype">int</span> len;
-<a name="l00199"></a>00199 
-<a name="l00200"></a>00200         <a class="code" href="check_8h.html#aa32f6159b4822467e941edf1fbf6c2fb" title="local assert function that use internal log system">check</a>(reloffset &lt; <span class="keyword">sizeof</span>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>));
-<a name="l00201"></a>00201         <a class="code" href="check_8h.html#aa32f6159b4822467e941edf1fbf6c2fb" title="local assert function that use internal log system">check</a>(reloffset + size &lt;= <span class="keyword">sizeof</span>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>));
-<a name="l00202"></a>00202 
-<a name="l00203"></a>00203         count = <a class="code" href="db5__hdr_8h.html#abd937344f6196669cdeff7e3a29714c6" title="get current row count">db5_hdr_count</a>();
-<a name="l00204"></a>00204         
-<a name="l00205"></a>00205         result = (<a class="code" href="structdb5__string__entry.html" title="string entry">db5_string_entry</a> *)calloc(count, <span class="keyword">sizeof</span>(<a class="code" href="structdb5__string__entry.html" title="string entry">db5_string_entry</a>));
-<a name="l00206"></a>00206         <span class="keywordflow">if</span> (result == NULL)
-<a name="l00207"></a>00207         {
-<a name="l00208"></a>00208                 <a class="code" href="logger_8h.html#a40fa9389068a7cdc50c32b3d619b41d0" title="add an entry to log file">add_log</a>(<a class="code" href="logger_8h.html#ad2f42e72094f9d4e560d0cece2280841" title="add_log operation failed loglevel">ADDLOG_FAIL</a>, <span class="stringliteral">&quot;[db5/dat]select_string_column&quot;</span>, <span class="stringliteral">&quot;not enougth memory\n&quot;</span>);
-<a name="l00209"></a>00209                 <span class="keywordflow">return</span> NULL;
-<a name="l00210"></a>00210         }
-<a name="l00211"></a>00211 
-<a name="l00212"></a>00212         <span class="keywordflow">for</span>(i=0; i &lt; count; i++)
-<a name="l00213"></a>00213         {
-<a name="l00214"></a>00214                 <span class="keywordflow">if</span> (<a class="code" href="db5__dat_8h.html#a90a5221b772f21c0893194a112ed1323" title="read an entry into database">db5_dat_select_row</a>(i, &amp;row) == <span class="keyword">false</span>)
-<a name="l00215"></a>00215                 {
-<a name="l00216"></a>00216                         <a class="code" href="db5__dat_8h.html#ae0a5a908446c64ed919b020a274e50cd" title="free a string column">db5_dat_free_string_column</a>(result, i);
-<a name="l00217"></a>00217                         <span class="keywordflow">return</span> NULL;
-<a name="l00218"></a>00218                 }
-<a name="l00219"></a>00219                 item = ((<span class="keywordtype">char</span> *)&amp;row) + reloffset;
-<a name="l00220"></a>00220                 <a class="code" href="wstring_8h.html#a5834eb9f58c7adff71d2f823caf9020e" title="convert a widechar string to char string">ws_wstoa</a>(item, size);
-<a name="l00221"></a>00221 
-<a name="l00222"></a>00222                 len = strlen(item);
-<a name="l00223"></a>00223 
-<a name="l00224"></a>00224                 result[i].<a class="code" href="structdb5__string__entry.html#aea78871d17698f931cab5b0897983637" title="value of entry">value</a> = (<span class="keywordtype">char</span> *)malloc(len+1);
-<a name="l00225"></a>00225                 <span class="keywordflow">if</span> (result[i].value == NULL)
-<a name="l00226"></a>00226                 {
-<a name="l00227"></a>00227                         <a class="code" href="db5__dat_8h.html#ae0a5a908446c64ed919b020a274e50cd" title="free a string column">db5_dat_free_string_column</a>(result, i);
-<a name="l00228"></a>00228                         <span class="keywordflow">return</span> NULL;
-<a name="l00229"></a>00229                 }
-<a name="l00230"></a>00230 
-<a name="l00231"></a>00231                 result[i].<a class="code" href="structdb5__string__entry.html#a0571b17452c4735ece210b2af5480912" title="position of entry">position</a> = i;
-<a name="l00232"></a>00232                 strncpy(result[i].value, item, len+1);
-<a name="l00233"></a>00233                 result[i].<a class="code" href="structdb5__string__entry.html#a2c85c33915ab4ba9d9b5ab6165b9c04a" title="checksum of entry">crc32</a> = <a class="code" href="crc32_8h.html#a232fa0731eee2e71fc63eaa8b78d4732" title="compute a string crc32 checksum">strcrc32</a>(result[i].value);
-<a name="l00234"></a>00234         }
-<a name="l00235"></a>00235 
-<a name="l00236"></a>00236         <span class="keywordflow">return</span> result;
-<a name="l00237"></a>00237 }
-<a name="l00238"></a>00238 
-<a name="l00239"></a><a class="code" href="db5__dat_8c.html#ae0a5a908446c64ed919b020a274e50cd">00239</a> <span class="keywordtype">void</span> <a class="code" href="db5__dat_8h.html#ae0a5a908446c64ed919b020a274e50cd" title="free a string column">db5_dat_free_string_column</a>(<a class="code" href="structdb5__string__entry.html" title="string entry">db5_string_entry</a> *index, <span class="keyword">const</span> uint32_t count)
-<a name="l00240"></a>00240 {
-<a name="l00241"></a>00241         uint32_t i;
-<a name="l00242"></a>00242 
-<a name="l00243"></a>00243         <a class="code" href="check_8h.html#aa32f6159b4822467e941edf1fbf6c2fb" title="local assert function that use internal log system">check</a>(index != NULL);
-<a name="l00244"></a>00244 
-<a name="l00245"></a>00245         <span class="keywordflow">for</span>(i = 0; i &lt; count; i++)
-<a name="l00246"></a>00246         {
-<a name="l00247"></a>00247                 free(index[i].value);
-<a name="l00248"></a>00248         }
-<a name="l00249"></a>00249 
-<a name="l00250"></a>00250         free(index);
-<a name="l00251"></a>00251 }
-<a name="l00252"></a>00252 
-<a name="l00253"></a>00253 
-<a name="l00254"></a><a class="code" href="db5__dat_8c.html#a82983eb1dda4f9bf70c4bfac651b0eb1">00254</a> <a class="code" href="structdb5__number__entry.html" title="number entry">db5_number_entry</a> *<a class="code" href="db5__dat_8h.html#a82983eb1dda4f9bf70c4bfac651b0eb1" title="extract a number column from database (system)">db5_dat_select_number_column</a>(<span class="keyword">const</span> <span class="keywordtype">size_t</span> reloffset)
-<a name="l00255"></a>00255 {
-<a name="l00256"></a>00256         <a class="code" href="structdb5__number__entry.html" title="number entry">db5_number_entry</a> *result;
-<a name="l00257"></a>00257         <a class="code" href="structdb5__row.html" title="a database row">db5_row</a> row;
-<a name="l00258"></a>00258         uint32_t i, count;
-<a name="l00259"></a>00259         uint32_t value;
-<a name="l00260"></a>00260 
-<a name="l00261"></a>00261         <a class="code" href="check_8h.html#aa32f6159b4822467e941edf1fbf6c2fb" title="local assert function that use internal log system">check</a>(reloffset &lt; <span class="keyword">sizeof</span>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>));
-<a name="l00262"></a>00262 
-<a name="l00263"></a>00263         count = <a class="code" href="db5__hdr_8h.html#abd937344f6196669cdeff7e3a29714c6" title="get current row count">db5_hdr_count</a>();
-<a name="l00264"></a>00264         
-<a name="l00265"></a>00265         result = (<a class="code" href="structdb5__number__entry.html" title="number entry">db5_number_entry</a> *)calloc(count, <span class="keyword">sizeof</span>(<a class="code" href="structdb5__number__entry.html" title="number entry">db5_number_entry</a>));
-<a name="l00266"></a>00266         <a class="code" href="check_8h.html#aa32f6159b4822467e941edf1fbf6c2fb" title="local assert function that use internal log system">check</a>(result != NULL);
-<a name="l00267"></a>00267 
-<a name="l00268"></a>00268         <span class="keywordflow">for</span>(i=0; i &lt; count; i++)
-<a name="l00269"></a>00269         {
-<a name="l00270"></a>00270                 <span class="keywordflow">if</span> (<a class="code" href="db5__dat_8h.html#a90a5221b772f21c0893194a112ed1323" title="read an entry into database">db5_dat_select_row</a>(i, &amp;row) == <span class="keyword">false</span>)
-<a name="l00271"></a>00271                 {
-<a name="l00272"></a>00272                         free(result);
-<a name="l00273"></a>00273                         <span class="keywordflow">return</span> NULL;
-<a name="l00274"></a>00274                 }
-<a name="l00275"></a>00275                 value = *(uint32_t *)(((ptrdiff_t)&amp;row) + reloffset);
-<a name="l00276"></a>00276 
-<a name="l00277"></a>00277                 result[i].<a class="code" href="structdb5__number__entry.html#aacf20188e81eca81ebfcc55a8357863b" title="value of entry">value</a> = value;
-<a name="l00278"></a>00278                 result[i].<a class="code" href="structdb5__number__entry.html#aad17e94eda9380b46c9903ee56e0236e" title="position of entry">position</a> = i;
-<a name="l00279"></a>00279         }
-<a name="l00280"></a>00280 
-<a name="l00281"></a>00281         <span class="keywordflow">return</span> result;
-<a name="l00282"></a>00282 }
-<a name="l00283"></a>00283 
-<a name="l00284"></a><a class="code" href="db5__dat_8c.html#afa78c295b8d932c0f613a8e6e3fa03dd">00284</a> <span class="keywordtype">void</span> <span class="keyword">inline</span> <a class="code" href="db5__dat_8h.html#afa78c295b8d932c0f613a8e6e3fa03dd" title="free a number column">db5_dat_free_number_column</a>(<a class="code" href="structdb5__number__entry.html" title="number entry">db5_number_entry</a> *index)
-<a name="l00285"></a>00285 {
-<a name="l00286"></a>00286         <a class="code" href="check_8h.html#aa32f6159b4822467e941edf1fbf6c2fb" title="local assert function that use internal log system">check</a>(index != NULL);
-<a name="l00287"></a>00287         free(index);
-<a name="l00288"></a>00288 }
 </pre></div></div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -337,7 +240,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr size="1"/><address style="text-align: right;"><small>Generated on Sun Jan 3 03:28:30 2010 for db5fuse by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Mon Jan 4 00:20:32 2010 for db5fuse by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <limits.h>
 
 #include "asf.h"
@@ -87,12 +88,13 @@ static size_t asf_find_header(const guid_t *guid, const char *buffer, const size
 	/* no enought data */
 	if (len < sizeof(guid_t))
 	{
+		add_log(ADDLOG_DEBUG, "[asf]find_header", "not enougth data to find header, len=%u\n", len);
 		return len;
 	}
 
 	for(result = 0; result <= (len - sizeof(guid_t)); result++)
 	{
-		if (compare4(buffer+result, &guid, sizeof(guid_t)))
+		if (compare4(buffer+result, guid, sizeof(guid_t)))
 		{
 			return result;
 		}
@@ -153,6 +155,8 @@ bool asf_generate_row(const char *filename, db5_row *row)
 		return true;
 	}
 
+	add_log(ADDLOG_DUMP, "[asf]gen_row", "asf header found at file offset 0x%08x\n", position);
+
 	header = (asf_tag *)(file_common_buffer+position);
 
 	if (SIZEOF_TAG + header->title_size + header->artist_size != header->record_size)
@@ -167,10 +171,11 @@ bool asf_generate_row(const char *filename, db5_row *row)
 		return true;
 	}
 
-	artist = malloc(header->artist_size);
+	/* TODO: bug bellow */
+	artist = (char *)malloc(header->artist_size);
 	if (artist == NULL)
 	{
-		add_log(ADDLOG_RECOVER, "[asf]gen_row", "not enougth memory\n");
+		add_log(ADDLOG_RECOVER, "[asf]gen_row", "not enougth memory, artist length=%u\n", header->artist_size);
 	}
 	else
 	{
@@ -180,10 +185,11 @@ bool asf_generate_row(const char *filename, db5_row *row)
 		free(artist);
 	}
 
-	title = malloc(header->title_size);
-	if (title != NULL)
+	/* TODO: bug bellow */
+	title = (char *)malloc(header->title_size);
+	if (title == NULL)
 	{
-		add_log(ADDLOG_RECOVER, "[asf]gen_row", "not enougth memory\n");
+		add_log(ADDLOG_RECOVER, "[asf]gen_row", "not enougth memory, title length=%u\n", header->title_size);
 	}
 	else
 	{
