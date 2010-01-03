@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 #define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="db5__idx_8c.html#a353290a15951926d00a18784be142a8f">byteof</a>(c, i)&nbsp;&nbsp;&nbsp;(((char *)&amp;c)[(i)])</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">get n-th byte of an object <br/></td></tr>
 <tr><td colspan="2"><h2>Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="db5__idx_8c.html#ad31ed6e7b77ba1ef94bf45123cd09664">db5_idx_order_number_column</a> (<a class="el" href="structdb5__number__entry.html">db5_number_entry</a> *list, const uint32_t count)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="db5__idx_8c.html#ad31ed6e7b77ba1ef94bf45123cd09664">db5_idx_order_number_column</a> (db5_number_entry *list, const uint32_t count)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">order a number column  <a href="#ad31ed6e7b77ba1ef94bf45123cd09664"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="db5__idx_8c.html#aa1ac3e6dbc81b13e7ba7b1ae89b2f8d4">db5_idx_index_column_full</a> (void *index, const uint32_t count, const uint32_t code, const bool numeric)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">generate an index  <a href="#aa1ac3e6dbc81b13e7ba7b1ae89b2f8d4"></a><br/></td></tr>
@@ -178,7 +178,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>Definition at line <a class="el" href="db5__idx_8c_source.html#l00162">162</a> of file <a class="el" href="db5__idx_8c_source.html">db5_idx.c</a>.</p>
 
-<p>References <a class="el" href="logger_8c_source.html#l00056">add_log()</a>, <a class="el" href="logger_8h_source.html#l00049">ADDLOG_FAIL</a>, <a class="el" href="db5__idx_8c_source.html#l00025">byteof</a>, <a class="el" href="check_8h_source.html#l00014">check</a>, <a class="el" href="db5__dat_8c_source.html#l00284">db5_dat_free_number_column()</a>, <a class="el" href="db5__dat_8c_source.html#l00254">db5_dat_select_number_column()</a>, <a class="el" href="db5__hdr_8c_source.html#l00060">db5_hdr_count()</a>, <a class="el" href="db5__idx_8c_source.html#l00088">db5_idx_index_column_full()</a>, and <a class="el" href="db5__idx_8c_source.html#l00073">db5_idx_order_number_column()</a>.</p>
+<p>References <a class="el" href="logger_8c_source.html#l00056">add_log()</a>, <a class="el" href="logger_8h_source.html#l00049">ADDLOG_FAIL</a>, <a class="el" href="db5__idx_8c_source.html#l00025">byteof</a>, <a class="el" href="check_8h_source.html#l00014">check</a>, <a class="el" href="db5__hdr_8c_source.html#l00060">db5_hdr_count()</a>, <a class="el" href="db5__idx_8c_source.html#l00088">db5_idx_index_column_full()</a>, and <a class="el" href="db5__idx_8c_source.html#l00073">db5_idx_order_number_column()</a>.</p>
 
 </div>
 </div>
@@ -226,7 +226,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>Definition at line <a class="el" href="db5__idx_8c_source.html#l00132">132</a> of file <a class="el" href="db5__idx_8c_source.html">db5_idx.c</a>.</p>
 
-<p>References <a class="el" href="logger_8c_source.html#l00056">add_log()</a>, <a class="el" href="logger_8h_source.html#l00049">ADDLOG_FAIL</a>, <a class="el" href="db5__idx_8c_source.html#l00025">byteof</a>, <a class="el" href="check_8h_source.html#l00014">check</a>, <a class="el" href="db5__dat_8c_source.html#l00239">db5_dat_free_string_column()</a>, <a class="el" href="db5__dat_8c_source.html#l00192">db5_dat_select_string_column()</a>, <a class="el" href="db5__hdr_8c_source.html#l00060">db5_hdr_count()</a>, and <a class="el" href="db5__idx_8c_source.html#l00088">db5_idx_index_column_full()</a>.</p>
+<p>References <a class="el" href="logger_8c_source.html#l00056">add_log()</a>, <a class="el" href="logger_8h_source.html#l00049">ADDLOG_FAIL</a>, <a class="el" href="db5__idx_8c_source.html#l00025">byteof</a>, <a class="el" href="check_8h_source.html#l00014">check</a>, <a class="el" href="db5__hdr_8c_source.html#l00060">db5_hdr_count()</a>, and <a class="el" href="db5__idx_8c_source.html#l00088">db5_idx_index_column_full()</a>.</p>
 
 </div>
 </div>
@@ -237,7 +237,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
         <tr>
           <td class="memname">void db5_idx_order_number_column </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structdb5__number__entry.html">db5_number_entry</a> *&nbsp;</td>
+          <td class="paramtype">db5_number_entry *&nbsp;</td>
           <td class="paramname"> <em>list</em>, </td>
         </tr>
         <tr>
@@ -287,7 +287,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr size="1"/><address style="text-align: right;"><small>Generated on Sun Jan 3 03:28:30 2010 for db5fuse by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Sun Jan 3 17:33:11 2010 for db5fuse by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

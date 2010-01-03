@@ -61,6 +61,8 @@
 #define ADDLOG_DEBUG		LOG_DEBUG
 /** @brief add_log dump loglevel */
 #define ADDLOG_DUMP		LOG_DEBUG
+/** @brief add_log verbose loglevel */
+#define ADDLOG_VERBOSE		(LOG_DEBUG+1)
 
 
 

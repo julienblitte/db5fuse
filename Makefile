@@ -17,7 +17,7 @@ DOC=doc
 # objects list
 obj_fuse=$(SRC)/fuse_main.c $(SRC)/fuse_implementation.c
 obj_audio=$(SRC)/mp3_mpeg.c $(SRC)/mp3_id3.c $(SRC)/mp3.c $(SRC)/asf.c $(SRC)/names.c
-obj_db5=$(SRC)/db5.c $(SRC)/db5_dat.c $(SRC)/db5_hdr.c $(SRC)/db5_idx.c $(SRC)/names.c
+obj_db5=$(SRC)/db5.c $(SRC)/db5_dat.c $(SRC)/db5_hdr.c $(SRC)/db5_index.c $(SRC)/names.c
 obj_common=$(SRC)/crc32.c $(SRC)/wstring.c $(SRC)/file.c $(SRC)/utf8.c $(SRC)/logger.c
 obj_fsck=$(SRC)/fsck.c
 

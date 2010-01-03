@@ -1,5 +1,5 @@
 /**
- * @file db5_idx.h
+ * @file db5_index.h
  * @brief Header - Database db5, index
  * @author Julien Blitte
  * @version 0.1
@@ -36,13 +36,13 @@
 #define DB5_IDX_CODE_SOURCE	0x43525358 /* 'XSRC' */
 
 /**
- * @brief index a string column (system)
+ * @brief index a column (system)
  * @param reloffset element address in structure line
  * @param size size of element
  * @param code index code to generate
  * @return true if successfull
  */
-bool db5_idx_index_string_column(const size_t reloffset, const size_t size, const uint32_t code);
+bool db5_index_index_column(const ptrdiff_t reloffset, const size_t size, const uint32_t code);
 
 /**
  * @brief index a string column (user friendly)
@@ -50,22 +50,6 @@ bool db5_idx_index_string_column(const size_t reloffset, const size_t size, cons
  * @param code index code to generate
  * @return true if successfull
  */
-#define db5_idx_index_str(member,code) 	db5_idx_index_string_column(offsetof(db5_row,member),membersizeof(db5_row,member),code)
-
-/**
- * @brief index a number column (system)
- * @param reloffset element address in structure line
- * @param code index code to generate
- * @return true if successfull
- */
-bool db5_idx_index_number_column(const size_t reloffset, const uint32_t code);
-
-/**
- * @brief index a numeric column (user friendly)
- * @param member element in structure line
- * @param code index code to generate
- * @return true if successfull
- */
-#define db5_idx_index_num(member,code) 	db5_idx_index_number_column(offsetof(db5_row,member),code)
+#define db5_index_colindex(member,code) 	db5_index_index_column(offsetof(db5_row,member),membersizeof(db5_row,member),code)
 
 #endif

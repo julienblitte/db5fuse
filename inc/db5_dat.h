@@ -64,47 +64,5 @@ bool db5_dat_delete_row(const uint32_t index);
  */
 uint32_t db5_dat_select_by_filename(const char *filename);
 
-/**
- * @brief extract a string column from database (system)
- * @param reloffset structure offset
- * @param size value size
- * @return corresponding column
- */
-db5_string_entry *db5_dat_select_string_column(const size_t reloffset, const size_t size);
-
-/**
- * @brief extract a string column from database (user friendly)
- * @param member the column to extract
- * @return corresponding column
- */
-#define db5_dat_str_extract(member)	db5_dat_select_string_column(offsetof(db5_row,member),membersizeof(db5_row,member))
-
-/**
- * @brief free a string column
- * @param index the string column to free
- * @param count number of lines
- */
-void db5_dat_free_string_column(db5_string_entry *index, const uint32_t count);
-
-/**
- * @brief extract a number column from database (system)
- * @param reloffset structure offset
- * @return corresponding column
- */
-db5_number_entry *db5_dat_select_number_column(const size_t reloffset);
-
-/**
- * @brief extract a number column from database (user friendly)
- * @param member the column to extract
- * @return corresponding column
- */
-#define db5_dat_num_extract(member)	db5_dat_select_number_column(offsetof(db5_row,member))
-
-/**
- * @brief free a number column
- * @param index the number column to free
- */
-void inline db5_dat_free_number_column(db5_number_entry *index);
-
 #endif
 

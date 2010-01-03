@@ -65,20 +65,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00059"></a>00059 
 <a name="l00065"></a>00065 uint32_t <a class="code" href="db5__dat_8h.html#aa732bed3a9a14167f47a3ba808cdbaa2" title="find a row corresponding to a file">db5_dat_select_by_filename</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *filename);
 <a name="l00066"></a>00066 
-<a name="l00073"></a>00073 <a class="code" href="structdb5__string__entry.html" title="string entry">db5_string_entry</a> *<a class="code" href="db5__dat_8h.html#aadc08892dc769241dc37c4ff3d55b98f" title="extract a string column from database (system)">db5_dat_select_string_column</a>(<span class="keyword">const</span> <span class="keywordtype">size_t</span> reloffset, <span class="keyword">const</span> <span class="keywordtype">size_t</span> size);
-<a name="l00074"></a>00074 
-<a name="l00080"></a><a class="code" href="db5__dat_8h.html#adf57a287331b07fae359a87784e58f70">00080</a> <span class="preprocessor">#define db5_dat_str_extract(member)     db5_dat_select_string_column(offsetof(db5_row,member),membersizeof(db5_row,member))</span>
-<a name="l00081"></a>00081 <span class="preprocessor"></span>
-<a name="l00087"></a>00087 <span class="keywordtype">void</span> <a class="code" href="db5__dat_8h.html#ae0a5a908446c64ed919b020a274e50cd" title="free a string column">db5_dat_free_string_column</a>(<a class="code" href="structdb5__string__entry.html" title="string entry">db5_string_entry</a> *index, <span class="keyword">const</span> uint32_t count);
-<a name="l00088"></a>00088 
-<a name="l00094"></a>00094 <a class="code" href="structdb5__number__entry.html" title="number entry">db5_number_entry</a> *<a class="code" href="db5__dat_8h.html#a82983eb1dda4f9bf70c4bfac651b0eb1" title="extract a number column from database (system)">db5_dat_select_number_column</a>(<span class="keyword">const</span> <span class="keywordtype">size_t</span> reloffset);
-<a name="l00095"></a>00095 
-<a name="l00101"></a><a class="code" href="db5__dat_8h.html#a3878ea7415e72d64037c5573e1f34629">00101</a> <span class="preprocessor">#define db5_dat_num_extract(member)     db5_dat_select_number_column(offsetof(db5_row,member))</span>
-<a name="l00102"></a>00102 <span class="preprocessor"></span>
-<a name="l00107"></a>00107 <span class="keywordtype">void</span> <span class="keyword">inline</span> <a class="code" href="db5__dat_8h.html#afa78c295b8d932c0f613a8e6e3fa03dd" title="free a number column">db5_dat_free_number_column</a>(<a class="code" href="structdb5__number__entry.html" title="number entry">db5_number_entry</a> *index);
-<a name="l00108"></a>00108 
-<a name="l00109"></a>00109 <span class="preprocessor">#endif</span>
-<a name="l00110"></a>00110 <span class="preprocessor"></span>
+<a name="l00067"></a>00067 <span class="preprocessor">#endif</span>
+<a name="l00068"></a>00068 <span class="preprocessor"></span>
 </pre></div></div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -94,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr size="1"/><address style="text-align: right;"><small>Generated on Sun Jan 3 03:28:29 2010 for db5fuse by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Mon Jan 4 00:20:32 2010 for db5fuse by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

@@ -22,7 +22,8 @@ static const char *log_levels[] =
 	"warning",
 	"notice",
 	"info",
-	"debug"
+	"debug",
+	"dump"
 };
 
 /** @brief Log file */
