@@ -73,6 +73,18 @@ static void names_insert_full(const uint32_t crc32, const char *filename)
 	tail->next = NULL;
 }
 
+/**
+ * @brief free a row from memory
+ * @param current the row to free up
+ */
+static void names_free_row(name_trans *current)
+{
+	check(current != NULL);
+
+	free(current->longname);
+	free(current);
+}
+
 bool names_select_shortname(const char *filename, char *shortname, const size_t shortname_size)
 {
 	name_trans *current;
@@ -192,6 +204,9 @@ void names_insert(const char *filename)
 
 	crc32 = strcrc32(filename);
 
+	add_log(ADDLOG_DEBUG, "[names]insert", "insert a new file, crc32=%08x\n", crc32);
+	log_dump_latin1("filename", filename);
+
 	names_insert_full(crc32, filename);
 
 	if (!names_save())
@@ -199,6 +214,8 @@ void names_insert(const char *filename)
 		add_log(ADDLOG_RECOVER, "[names]insert", "error while saving names list\n");
 		log_dump_latin1("filename", filename);
 	}
+
+	add_log(ADDLOG_DEBUG, "[names]insert", "done.\n");
 }
 
 const char *names_select_longname(const char *shortname)
@@ -287,19 +304,36 @@ bool names_delete(const char *filename)
 
 	previous = NULL;
 	current = head;
+	/* while we don't have finished cursing */
 	while(current != NULL)
 	{
+		/* if filename is the correct one */
 		if (strcmp(filename, current->longname) == 0)
 		{
-			if (previous != NULL)
+			/* only one node */
+			if (head == current && tail == current)
 			{
-				previous->next = current->next;
-				free(current);
+				head = NULL, tail = NULL;
+				names_free_row(current);
 			}
-			else
+			/* first node */
+			else if (head == current)
 			{
 				head = current->next;
-				free(current);
+				names_free_row(current);
+			}
+			/* last node */
+			else if (tail == current)
+			{
+				tail = previous;
+				tail->next = NULL;
+				names_free_row(current);
+			}
+			/* general case */
+			else
+			{
+				previous->next = current->next;
+				names_free_row(current);
 			}
 
 			if (!names_save())
@@ -334,7 +368,7 @@ void names_free()
 	{
 		current = head;
 		head = head->next;
-		free(current);
+		names_free_row(current);
 	}
 }
 

@@ -513,7 +513,7 @@ int fuse_impl_write (const char *path, const char *data, size_t size, off_t offs
 {
 	int file;
 	int result;
-	
+
 	check(path != NULL);
 	/* check(data != NULL); */
 	check(filedata != NULL);
