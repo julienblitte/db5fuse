@@ -141,38 +141,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00119"></a>00119         str = <a class="code" href="mp3__id3_8h.html#a30393d4ce037c54df44abe89280b4f3d" title="get a id3 tag value (string)">id3_get_string</a>(tag, ID3_FRAME_ARTIST);
 <a name="l00120"></a>00120         <span class="keywordflow">if</span> (str == <a class="code" href="mp3__id3_8h.html#a817e417537092079bc977b67f240cfda" title="magic value returned when an error occurs (string)">ID3_STRING_ERROR</a>)
 <a name="l00121"></a>00121         {
-<a name="l00122"></a>00122                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aef387cafc2b9376a7714ee941cf26c09" title="artist name - latin1">artist</a>, <a class="code" href="config_8h.html#acab3c4626a65f0f84e587cc04cfc3add" title="default arstist - ascii">CONFIG_DEFAULT_ARTIST</a>, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, artist)/2);
+<a name="l00122"></a>00122                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aef387cafc2b9376a7714ee941cf26c09" title="artist name - latin1 - index: ARTIST">artist</a>, <a class="code" href="config_8h.html#acab3c4626a65f0f84e587cc04cfc3add" title="default arstist - ascii">CONFIG_DEFAULT_ARTIST</a>, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, artist)/2);
 <a name="l00123"></a>00123         }
 <a name="l00124"></a>00124         <span class="keywordflow">else</span>
 <a name="l00125"></a>00125         {
-<a name="l00126"></a>00126                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aef387cafc2b9376a7714ee941cf26c09" title="artist name - latin1">artist</a>, str, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, artist)/2);
+<a name="l00126"></a>00126                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aef387cafc2b9376a7714ee941cf26c09" title="artist name - latin1 - index: ARTIST">artist</a>, str, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, artist)/2);
 <a name="l00127"></a>00127                 free(str);
 <a name="l00128"></a>00128         }
 <a name="l00129"></a>00129 
 <a name="l00130"></a>00130         str = <a class="code" href="mp3__id3_8h.html#a30393d4ce037c54df44abe89280b4f3d" title="get a id3 tag value (string)">id3_get_string</a>(tag, ID3_FRAME_ALBUM);
 <a name="l00131"></a>00131         <span class="keywordflow">if</span> (str == <a class="code" href="mp3__id3_8h.html#a817e417537092079bc977b67f240cfda" title="magic value returned when an error occurs (string)">ID3_STRING_ERROR</a>)
 <a name="l00132"></a>00132         {
-<a name="l00133"></a>00133                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#a370f386d32a5bf1f4e6e89bad9bf8728" title="album name - latin1">album</a>, <a class="code" href="config_8h.html#aeaef50342ffbbf110e00bc2f480f5023" title="default album - ascii">CONFIG_DEFAULT_ALBUM</a>, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, album)/2);
+<a name="l00133"></a>00133                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#a370f386d32a5bf1f4e6e89bad9bf8728" title="album name - latin1 - index: ALBUM">album</a>, <a class="code" href="config_8h.html#aeaef50342ffbbf110e00bc2f480f5023" title="default album - ascii">CONFIG_DEFAULT_ALBUM</a>, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, album)/2);
 <a name="l00134"></a>00134         }
 <a name="l00135"></a>00135         <span class="keywordflow">else</span>
 <a name="l00136"></a>00136         {
-<a name="l00137"></a>00137                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#a370f386d32a5bf1f4e6e89bad9bf8728" title="album name - latin1">album</a>, str, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, album)/2);
+<a name="l00137"></a>00137                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#a370f386d32a5bf1f4e6e89bad9bf8728" title="album name - latin1 - index: ALBUM">album</a>, str, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, album)/2);
 <a name="l00138"></a>00138                 free(str);
 <a name="l00139"></a>00139         }
 <a name="l00140"></a>00140 
 <a name="l00141"></a>00141         str = <a class="code" href="mp3__id3_8h.html#a30393d4ce037c54df44abe89280b4f3d" title="get a id3 tag value (string)">id3_get_string</a>(tag, ID3_FRAME_TITLE);
 <a name="l00142"></a>00142         <span class="keywordflow">if</span> (str == <a class="code" href="mp3__id3_8h.html#a817e417537092079bc977b67f240cfda" title="magic value returned when an error occurs (string)">ID3_STRING_ERROR</a>)
 <a name="l00143"></a>00143         {
-<a name="l00144"></a>00144                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aade14881abcb98e36463f27c8c99080b" title="title name - latin1">title</a>, <a class="code" href="config_8h.html#a72fb4f81f85d40943118b961b8550fed" title="default title - ascii">CONFIG_DEFAULT_TITLE</a>, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, title)/2);
+<a name="l00144"></a>00144                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aade14881abcb98e36463f27c8c99080b" title="title name - latin1 - index: TITLE">title</a>, <a class="code" href="config_8h.html#a72fb4f81f85d40943118b961b8550fed" title="default title - ascii">CONFIG_DEFAULT_TITLE</a>, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, title)/2);
 <a name="l00145"></a>00145         }
 <a name="l00146"></a>00146         <span class="keywordflow">else</span>
 <a name="l00147"></a>00147         {
-<a name="l00148"></a>00148                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aade14881abcb98e36463f27c8c99080b" title="title name - latin1">title</a>, str, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, title)/2);
+<a name="l00148"></a>00148                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aade14881abcb98e36463f27c8c99080b" title="title name - latin1 - index: TITLE">title</a>, str, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, title)/2);
 <a name="l00149"></a>00149                 free(str);
 <a name="l00150"></a>00150         }
 <a name="l00151"></a>00151 
-<a name="l00152"></a>00152         row-&gt;<a class="code" href="structdb5__row.html#a2ecc347af715a93477f6ff60588dbecc" title="track number">track</a> = <a class="code" href="mp3__id3_8h.html#ace290f4a6137372c238711eab564f64d" title="get a id3 tag value (string)">id3_get_int</a>(tag, ID3_FRAME_TRACK);
-<a name="l00153"></a>00153         <a class="code" href="mp3_8c.html#a1de2c7346a7b4b2dc2fb29bf388b4234" title="set variable to a default value if variable is set to &amp;#39;error value&amp;#39;">int_defaultvalue</a>(row-&gt;<a class="code" href="structdb5__row.html#a2ecc347af715a93477f6ff60588dbecc" title="track number">track</a>, 0);
+<a name="l00152"></a>00152         row-&gt;<a class="code" href="structdb5__row.html#a2ecc347af715a93477f6ff60588dbecc" title="track number - index: TRACK">track</a> = <a class="code" href="mp3__id3_8h.html#ace290f4a6137372c238711eab564f64d" title="get a id3 tag value (string)">id3_get_int</a>(tag, ID3_FRAME_TRACK);
+<a name="l00153"></a>00153         <a class="code" href="mp3_8c.html#a1de2c7346a7b4b2dc2fb29bf388b4234" title="set variable to a default value if variable is set to &amp;#39;error value&amp;#39;">int_defaultvalue</a>(row-&gt;<a class="code" href="structdb5__row.html#a2ecc347af715a93477f6ff60588dbecc" title="track number - index: TRACK">track</a>, 0);
 <a name="l00154"></a>00154 
 <a name="l00155"></a>00155         row-&gt;<a class="code" href="structdb5__row.html#a599988244c7b548dec2054041427a36d" title="year">year</a> = <a class="code" href="mp3__id3_8h.html#ace290f4a6137372c238711eab564f64d" title="get a id3 tag value (string)">id3_get_int</a>(tag, ID3_FRAME_YEAR);
 <a name="l00156"></a>00156         <a class="code" href="mp3_8c.html#a1de2c7346a7b4b2dc2fb29bf388b4234" title="set variable to a default value if variable is set to &amp;#39;error value&amp;#39;">int_defaultvalue</a>(row-&gt;<a class="code" href="structdb5__row.html#a599988244c7b548dec2054041427a36d" title="year">year</a>, 0);
@@ -180,11 +180,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00158"></a>00158         num = <a class="code" href="mp3__id3_8h.html#ace290f4a6137372c238711eab564f64d" title="get a id3 tag value (string)">id3_get_int</a>(tag, ID3_FRAME_GENRE);
 <a name="l00159"></a>00159         <span class="keywordflow">if</span> (num == <a class="code" href="mp3__id3_8h.html#a97f0dd659528de71dca0836dec1e0492" title="magic value returned when an error occurs (integer)">ID3_INT_ERROR</a> || num &gt;= <a class="code" href="mp3__id3_8h.html#acf14dfeef14d8c02d613650751534d18" title="number of music genres">ID3_NB_GENRES</a>)
 <a name="l00160"></a>00160         {
-<a name="l00161"></a>00161                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aa4a5eb13a6412699f7b4a078d9eb57e1" title="genre of music - latin1">genre</a>, <a class="code" href="config_8h.html#a97e1a8311544c177f418530552a87178" title="default genre - ascii">CONFIG_DEFAULT_GENRE</a>, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, genre)/2);
+<a name="l00161"></a>00161                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aa4a5eb13a6412699f7b4a078d9eb57e1" title="genre of music - latin1 - index: GENRE">genre</a>, <a class="code" href="config_8h.html#a97e1a8311544c177f418530552a87178" title="default genre - ascii">CONFIG_DEFAULT_GENRE</a>, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, genre)/2);
 <a name="l00162"></a>00162         }
 <a name="l00163"></a>00163         <span class="keywordflow">else</span>
 <a name="l00164"></a>00164         {
-<a name="l00165"></a>00165                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aa4a5eb13a6412699f7b4a078d9eb57e1" title="genre of music - latin1">genre</a>, <a class="code" href="mp3__id3_8h.html#af0650b5661028f97ee3aeac47178bfd5" title="music genres defined">id3_genres</a>[num], <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, genre)/2);
+<a name="l00165"></a>00165                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aa4a5eb13a6412699f7b4a078d9eb57e1" title="genre of music - latin1 - index: GENRE">genre</a>, <a class="code" href="mp3__id3_8h.html#af0650b5661028f97ee3aeac47178bfd5" title="music genres defined">id3_genres</a>[num], <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, genre)/2);
 <a name="l00166"></a>00166         }
 <a name="l00167"></a>00167 
 <a name="l00168"></a>00168         id3_file_close(id3);
@@ -226,7 +226,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr size="1"/><address style="text-align: right;"><small>Generated on Mon Jan 4 00:20:32 2010 for db5fuse by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Jan 5 22:21:10 2010 for db5fuse by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

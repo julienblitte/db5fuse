@@ -250,14 +250,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00207"></a>00207                         <a class="code" href="logger_8h.html#a40fa9389068a7cdc50c32b3d619b41d0" title="add an entry to log file">add_log</a>(<a class="code" href="logger_8h.html#ad2f42e72094f9d4e560d0cece2280841" title="add_log operation failed loglevel">ADDLOG_FAIL</a>, <span class="stringliteral">&quot;[fsck]step3&quot;</span>, <span class="stringliteral">&quot;unable to get file information form database, entry id: %u\n&quot;</span>, i);
 <a name="l00208"></a>00208                         <span class="keywordflow">return</span> NULL;
 <a name="l00209"></a>00209                 }
-<a name="l00210"></a>00210                 <a class="code" href="wstring_8h.html#a5834eb9f58c7adff71d2f823caf9020e" title="convert a widechar string to char string">ws_wstoa</a>(row.<a class="code" href="structdb5__row.html#a0d5422a3af167af8e44e0f21052327c1" title="real filename - latin1">filename</a>, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, filename));
+<a name="l00210"></a>00210                 <a class="code" href="wstring_8h.html#a5834eb9f58c7adff71d2f823caf9020e" title="convert a widechar string to char string">ws_wstoa</a>(row.<a class="code" href="structdb5__row.html#a0d5422a3af167af8e44e0f21052327c1" title="real filename - latin1 - index: FILENAME">filename</a>, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, filename));
 <a name="l00211"></a>00211 
-<a name="l00212"></a>00212                 <a class="code" href="db5_8h.html#a95d32e7de53147d58d4d90ab85dfff3e" title="complete the path of a short filename to get local filename (real path)">db5_shortname_to_localfile</a>(row.<a class="code" href="structdb5__row.html#a0d5422a3af167af8e44e0f21052327c1" title="real filename - latin1">filename</a>, localfile, <span class="keyword">sizeof</span>(localfile));
+<a name="l00212"></a>00212                 <a class="code" href="db5_8h.html#a95d32e7de53147d58d4d90ab85dfff3e" title="complete the path of a short filename to get local filename (real path)">db5_shortname_to_localfile</a>(row.<a class="code" href="structdb5__row.html#a0d5422a3af167af8e44e0f21052327c1" title="real filename - latin1 - index: FILENAME">filename</a>, localfile, <span class="keyword">sizeof</span>(localfile));
 <a name="l00213"></a>00213 
 <a name="l00214"></a>00214                 <span class="keywordflow">if</span> (!<a class="code" href="file_8h.html#aba2db2f17a82cb9f949de86a2f783ce6" title="test if the file exists">file_exists</a>(localfile))
 <a name="l00215"></a>00215                 {
 <a name="l00216"></a>00216                         <a class="code" href="logger_8h.html#a40fa9389068a7cdc50c32b3d619b41d0" title="add an entry to log file">add_log</a>(<a class="code" href="logger_8h.html#ad2f42e72094f9d4e560d0cece2280841" title="add_log operation failed loglevel">ADDLOG_FAIL</a>, <span class="stringliteral">&quot;[fsck]step3&quot;</span>, <span class="stringliteral">&quot;local file of entry %u does not exists\n&quot;</span>, i);
-<a name="l00217"></a>00217                         <a class="code" href="logger_8h.html#a18054aff3234e696f4fcec35628d0b3a" title="dump a (latin1) string variable to log">log_dump_latin1</a>(<span class="stringliteral">&quot;shortname&quot;</span>, row.<a class="code" href="structdb5__row.html#a0d5422a3af167af8e44e0f21052327c1" title="real filename - latin1">filename</a>);
+<a name="l00217"></a>00217                         <a class="code" href="logger_8h.html#a18054aff3234e696f4fcec35628d0b3a" title="dump a (latin1) string variable to log">log_dump_latin1</a>(<span class="stringliteral">&quot;shortname&quot;</span>, row.<a class="code" href="structdb5__row.html#a0d5422a3af167af8e44e0f21052327c1" title="real filename - latin1 - index: FILENAME">filename</a>);
 <a name="l00218"></a>00218                         <a class="code" href="logger_8h.html#af1da1cdf6717922a5f66b8beb95d9d6e" title="dump a (utf8) string variable to log">log_dump</a>(<span class="stringliteral">&quot;localfile&quot;</span>, localfile);
 <a name="l00219"></a>00219 
 <a name="l00220"></a>00220                         <span class="keywordflow">if</span> (fix)
@@ -442,7 +442,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr size="1"/><address style="text-align: right;"><small>Generated on Mon Jan 4 00:20:32 2010 for db5fuse by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Jan 5 22:21:10 2010 for db5fuse by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

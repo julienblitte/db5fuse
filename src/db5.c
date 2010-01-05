@@ -345,60 +345,38 @@ bool db5_delete(const char *filename)
 	return true;
 }
 
+
+/**
+ * @brief index a column and store result in a bitmap
+ * @param bitmap the bitmap variable
+ * @param item variable to index
+ * @param code code of index
+ */
+#define db5_index_col(bitmap, item, code)	bitmap <<= 1; if (db5_index_colindex(item, code)) { bitmap++; }
+
 bool db5_index()
 {
 	unsigned int result;
 
 	result = 0;
+	db5_index_col(result, filename, DB5_IDX_CODE_FILENAME);
+	db5_index_col(result, filepath, DB5_IDX_CODE_FILEPATH);
+	db5_index_col(result, album, DB5_IDX_CODE_ALBUM);
+	db5_index_col(result, genre, DB5_IDX_CODE_GENRE);
+	db5_index_col(result, title, DB5_IDX_CODE_TITLE);
+	db5_index_col(result, artist, DB5_IDX_CODE_ARTIST);
+	db5_index_col(result, track, DB5_IDX_CODE_TRACK);
+	db5_index_col(result, source, DB5_IDX_CODE_SOURCE);
+	db5_index_col(result, reserved, DB5_IDX_CODE_DEV);
 
-	if (db5_index_colindex(filename, DB5_IDX_CODE_FILENAME))
+	if (result != 0x1ff)
 	{
-		result++;
-	}
+		add_log(ADDLOG_RECOVER, "[db5]index", "error during indexing, success bitmap=0x%p", result);
 
-	result <<= 1;
-	if (db5_index_colindex(filepath, DB5_IDX_CODE_FILEPATH))
-	{
-		result++;
+		return false;
 	}
-
-	result <<= 1;
-	if (db5_index_colindex(album, DB5_IDX_CODE_ALBUM))
-	{
-		result++;
-	}
-
-	result <<= 1;
-	if (db5_index_colindex(genre, DB5_IDX_CODE_GENRE))
-	{
-		result++;
-	}
-
-	result <<= 1;
-	if (db5_index_colindex(title, DB5_IDX_CODE_TITLE))
-	{
-		result++;
-	}
-
-	result <<= 1;
-	if (db5_index_colindex(artist, DB5_IDX_CODE_ARTIST))
-	{
-		result++;
-	}
-
-	result <<= 1;
-	if (db5_index_colindex(track, DB5_IDX_CODE_TRACK))
-	{
-		result++;
-	}
-
-	result <<= 1;
-	if (db5_index_colindex(source, DB5_IDX_CODE_SOURCE))
-	{
-		result++;
-	}
-
-	return (result == 0xff);
+	
+	return true;
 }
 
 bool db5_localfile(const char *filename, char *localfile, const size_t localfile_size)

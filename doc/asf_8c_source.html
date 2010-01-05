@@ -138,8 +138,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00125"></a>00125 <span class="preprocessor"></span>        row-&gt;<a class="code" href="structdb5__row.html#a599988244c7b548dec2054041427a36d" title="year">year</a> = 1984;
 <a name="l00126"></a>00126 <span class="preprocessor">#endif</span>
 <a name="l00127"></a>00127 <span class="preprocessor"></span>
-<a name="l00128"></a>00128         strncpy(row-&gt;<a class="code" href="structdb5__row.html#a370f386d32a5bf1f4e6e89bad9bf8728" title="album name - latin1">album</a>, <span class="stringliteral">&quot;Microsoft WMA&quot;</span>, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, album)/2);
-<a name="l00129"></a>00129         strncpy(row-&gt;<a class="code" href="structdb5__row.html#aa4a5eb13a6412699f7b4a078d9eb57e1" title="genre of music - latin1">genre</a>, <span class="stringliteral">&quot;WMA file&quot;</span>, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, genre)/2);
+<a name="l00128"></a>00128         strncpy(row-&gt;<a class="code" href="structdb5__row.html#a370f386d32a5bf1f4e6e89bad9bf8728" title="album name - latin1 - index: ALBUM">album</a>, <span class="stringliteral">&quot;Microsoft WMA&quot;</span>, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, album)/2);
+<a name="l00129"></a>00129         strncpy(row-&gt;<a class="code" href="structdb5__row.html#aa4a5eb13a6412699f7b4a078d9eb57e1" title="genre of music - latin1 - index: GENRE">genre</a>, <span class="stringliteral">&quot;WMA file&quot;</span>, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, genre)/2);
 <a name="l00130"></a>00130 
 <a name="l00131"></a>00131         wma = fopen(filename, <span class="stringliteral">&quot;rb&quot;</span>);
 <a name="l00132"></a>00132         <span class="keywordflow">if</span> (wma == NULL)
@@ -194,7 +194,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00181"></a>00181         {
 <a name="l00182"></a>00182                 memcpy(artist, <a class="code" href="file_8h.html#a9fdcc31aab929f7ff259d905ad4d096c" title="shared buffer for file operation">file_common_buffer</a> + position + <a class="code" href="asf_8c.html#ac775fb7c57023ee4f47f995daaf1ab51" title="size of asf tag">SIZEOF_TAG</a> + header-&gt;<a class="code" href="structasf__tag__t.html#a11dcc8a529617dd16800a5df0398b68e" title="title size">title_size</a>, header-&gt;<a class="code" href="structasf__tag__t.html#ad7a6fcc936d094c8bc2a9273cb5a4ce6" title="artist size">artist_size</a>);
 <a name="l00183"></a>00183                 <a class="code" href="wstring_8h.html#a5834eb9f58c7adff71d2f823caf9020e" title="convert a widechar string to char string">ws_wstoa</a>(artist, header-&gt;<a class="code" href="structasf__tag__t.html#ad7a6fcc936d094c8bc2a9273cb5a4ce6" title="artist size">artist_size</a>);
-<a name="l00184"></a>00184                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aef387cafc2b9376a7714ee941cf26c09" title="artist name - latin1">artist</a>, artist, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, artist)/2);
+<a name="l00184"></a>00184                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aef387cafc2b9376a7714ee941cf26c09" title="artist name - latin1 - index: ARTIST">artist</a>, artist, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, artist)/2);
 <a name="l00185"></a>00185                 free(artist);
 <a name="l00186"></a>00186         }
 <a name="l00187"></a>00187 
@@ -208,7 +208,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00195"></a>00195         {
 <a name="l00196"></a>00196                 memcpy(title, <a class="code" href="file_8h.html#a9fdcc31aab929f7ff259d905ad4d096c" title="shared buffer for file operation">file_common_buffer</a> + position + <a class="code" href="asf_8c.html#ac775fb7c57023ee4f47f995daaf1ab51" title="size of asf tag">SIZEOF_TAG</a>, header-&gt;<a class="code" href="structasf__tag__t.html#a11dcc8a529617dd16800a5df0398b68e" title="title size">title_size</a>);
 <a name="l00197"></a>00197                 <a class="code" href="wstring_8h.html#a5834eb9f58c7adff71d2f823caf9020e" title="convert a widechar string to char string">ws_wstoa</a>(title, header-&gt;<a class="code" href="structasf__tag__t.html#a11dcc8a529617dd16800a5df0398b68e" title="title size">title_size</a>);
-<a name="l00198"></a>00198                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aade14881abcb98e36463f27c8c99080b" title="title name - latin1">title</a>, title, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, title)/2);
+<a name="l00198"></a>00198                 strncpy(row-&gt;<a class="code" href="structdb5__row.html#aade14881abcb98e36463f27c8c99080b" title="title name - latin1 - index: TITLE">title</a>, title, <a class="code" href="db5__types_8h.html#aeef5ee62da1ba5d87142c00b8983b695" title="get size of a structure member">membersizeof</a>(<a class="code" href="structdb5__row.html" title="a database row">db5_row</a>, title)/2);
 <a name="l00199"></a>00199                 free(title);
 <a name="l00200"></a>00200         }
 <a name="l00201"></a>00201 
@@ -230,7 +230,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr size="1"/><address style="text-align: right;"><small>Generated on Mon Jan 4 00:20:32 2010 for db5fuse by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Jan 5 22:21:10 2010 for db5fuse by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>
