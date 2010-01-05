@@ -65,7 +65,21 @@ static int db5_index_compare_entries(const void *entry1, const void *entry2)
 	return memcmp(index_master_data+pos1*index_entry_size, index_master_data+pos2*index_entry_size, index_entry_size);
 }
 
-static void index_dump_entries(const index_entry *entries, const uint32_t count);
+/**
+ * @brief dump an index table
+ * @param entries index entries
+ * @param count number of entries
+ */
+static void index_dump_table(const index_entry *entries, const uint32_t count)
+{
+	uint32_t i;
+
+	for(i=0; i < count; i++)
+	{
+		add_log(ADDLOG_DUMP, "[db5/index]index_col", " - [%08x] %u\n", entries[i].uid, entries[i].position);
+	}
+}
+
 
 bool db5_index_index_column(const ptrdiff_t reloffset, const size_t size, const uint32_t code)
 {
@@ -153,8 +167,9 @@ bool db5_index_index_column(const ptrdiff_t reloffset, const size_t size, const 
 	/* sort data */
 	qsort(entries, count, sizeof(index_entry), db5_index_compare_entries);
 
-	/* TODO: comment this line */
-	index_dump_entries(entries, count);
+#ifdef DEBUG
+	index_dump_table(entries, count);
+#endif
 
 	/* save data */
 	if (fwrite(entries, sizeof(index_entry), count, file) != count)
@@ -171,15 +186,5 @@ bool db5_index_index_column(const ptrdiff_t reloffset, const size_t size, const 
 	add_log(ADDLOG_DEBUG, "[db5/index]index_col", "done.\n");
 
 	return true;
-}
-
-static void index_dump_entries(const index_entry *entries, const uint32_t count)
-{
-	uint32_t i;
-
-	for(i=0; i < count; i++)
-	{
-		add_log(ADDLOG_DUMP, "[db5/index]index_col", " - [%08x] %u\n", entries[i].uid, entries[i].position);
-	}
 }
 
