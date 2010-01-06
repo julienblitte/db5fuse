@@ -44,39 +44,40 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h1>inc/db5_index.h</h1><a href="db5__index_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00007"></a>00007 <span class="preprocessor">#ifndef INC_DB5_IDX_H</span>
 <a name="l00008"></a>00008 <span class="preprocessor"></span><span class="preprocessor">#define INC_DB5_IDX_H</span>
-<a name="l00009"></a>00009 <span class="preprocessor"></span><span class="preprocessor">#include &lt;stdlib.h&gt;</span>
-<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
-<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;stdbool.h&gt;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;string.h&gt;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;stdint.h&gt;</span>
-<a name="l00014"></a>00014 
-<a name="l00015"></a>00015 <span class="preprocessor">#include &quot;<a class="code" href="db5__types_8h.html" title="Header - Database db5, types.">db5_types.h</a>&quot;</span>
-<a name="l00016"></a>00016 <span class="preprocessor">#include &quot;<a class="code" href="db5__dat_8h.html" title="Header - Database db5, data.">db5_dat.h</a>&quot;</span>
-<a name="l00017"></a>00017 
+<a name="l00009"></a>00009 <span class="preprocessor"></span><span class="preprocessor">#include &lt;stdbool.h&gt;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;stddef.h&gt;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;stdint.h&gt;</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;string.h&gt;</span>
+<a name="l00015"></a>00015 
+<a name="l00016"></a>00016 <span class="preprocessor">#include &quot;<a class="code" href="db5__types_8h.html" title="Header - Database db5, types.">db5_types.h</a>&quot;</span>
+<a name="l00017"></a>00017 <span class="preprocessor">#include &quot;<a class="code" href="db5__dat_8h.html" title="Header - Database db5, data.">db5_dat.h</a>&quot;</span>
 <a name="l00018"></a>00018 
-<a name="l00020"></a><a class="code" href="db5__index_8h.html#aaa666e694875f97601327fc7e40c4575">00020</a> <span class="preprocessor">#define DB5_IDX_CODE_DEV        0x56454440 </span><span class="comment">/* &apos;@DEV&apos; */</span>
-<a name="l00021"></a>00021 
-<a name="l00022"></a><a class="code" href="db5__index_8h.html#af7137fe7d0eb6390dd4d531a261b4620">00022</a> <span class="preprocessor">#define DB5_IDX_CODE_FILENAME   0x4d414e46 </span><span class="comment">/* &apos;FNAM&apos; */</span>
-<a name="l00023"></a>00023 
-<a name="l00024"></a><a class="code" href="db5__index_8h.html#a4332cbfeb5bfdce567f2e6e9c0f250a9">00024</a> <span class="preprocessor">#define DB5_IDX_CODE_FILEPATH   0x48545046 </span><span class="comment">/* &apos;FPTH&apos; */</span>
-<a name="l00025"></a>00025 
-<a name="l00026"></a><a class="code" href="db5__index_8h.html#a099e5efd9480bfdad052781c9c1dfbfe">00026</a> <span class="preprocessor">#define DB5_IDX_CODE_ALBUM      0x424c4154 </span><span class="comment">/* &apos;TALB&apos; */</span>
-<a name="l00027"></a>00027 
-<a name="l00028"></a><a class="code" href="db5__index_8h.html#a94727d5bb6d234bd6d62b25807ea2c69">00028</a> <span class="preprocessor">#define DB5_IDX_CODE_GENRE      0x4e4f4354 </span><span class="comment">/* &apos;TCON&apos; */</span>
-<a name="l00029"></a>00029 
-<a name="l00030"></a><a class="code" href="db5__index_8h.html#a5e4418b84ab8846a5a288ca1e4f6411d">00030</a> <span class="preprocessor">#define DB5_IDX_CODE_TITLE      0x32544954 </span><span class="comment">/* &apos;TIT2&apos; */</span>
-<a name="l00031"></a>00031 
-<a name="l00032"></a><a class="code" href="db5__index_8h.html#a2763882b35223e2b33a7caf776cacb8e">00032</a> <span class="preprocessor">#define DB5_IDX_CODE_ARTIST     0x31455054 </span><span class="comment">/* &apos;TPE1&apos; */</span>
-<a name="l00033"></a>00033 
-<a name="l00034"></a><a class="code" href="db5__index_8h.html#ac65f3eaecf932e5ce729710e77bbda1f">00034</a> <span class="preprocessor">#define DB5_IDX_CODE_TRACK      0x4b435254 </span><span class="comment">/* &apos;TRCK&apos; */</span>
-<a name="l00035"></a>00035 
-<a name="l00036"></a><a class="code" href="db5__index_8h.html#a9cca90a021483ad61011cb0f1c702aa7">00036</a> <span class="preprocessor">#define DB5_IDX_CODE_SOURCE     0x43525358 </span><span class="comment">/* &apos;XSRC&apos; */</span>
-<a name="l00037"></a>00037 
-<a name="l00045"></a>00045 <span class="keywordtype">bool</span> <a class="code" href="db5__index_8h.html#a8aa16127c73bbf8d5fb5dae41614ed6c" title="index a column (system)">db5_index_index_column</a>(<span class="keyword">const</span> ptrdiff_t reloffset, <span class="keyword">const</span> <span class="keywordtype">size_t</span> size, <span class="keyword">const</span> uint32_t code);
-<a name="l00046"></a>00046 
-<a name="l00053"></a><a class="code" href="db5__index_8h.html#a6760e97598fc65e0d8b2d9d60cd40549">00053</a> <span class="preprocessor">#define db5_index_colindex(member,code)         db5_index_index_column(offsetof(db5_row,member),membersizeof(db5_row,member),code)</span>
-<a name="l00054"></a>00054 <span class="preprocessor"></span>
-<a name="l00055"></a>00055 <span class="preprocessor">#endif</span>
+<a name="l00019"></a>00019 
+<a name="l00021"></a><a class="code" href="db5__index_8h.html#aaa666e694875f97601327fc7e40c4575">00021</a> <span class="preprocessor">#define DB5_IDX_CODE_DEV        0x56454440 </span><span class="comment">/* &apos;@DEV&apos; */</span>
+<a name="l00022"></a>00022 
+<a name="l00023"></a><a class="code" href="db5__index_8h.html#af7137fe7d0eb6390dd4d531a261b4620">00023</a> <span class="preprocessor">#define DB5_IDX_CODE_FILENAME   0x4d414e46 </span><span class="comment">/* &apos;FNAM&apos; */</span>
+<a name="l00024"></a>00024 
+<a name="l00025"></a><a class="code" href="db5__index_8h.html#a4332cbfeb5bfdce567f2e6e9c0f250a9">00025</a> <span class="preprocessor">#define DB5_IDX_CODE_FILEPATH   0x48545046 </span><span class="comment">/* &apos;FPTH&apos; */</span>
+<a name="l00026"></a>00026 
+<a name="l00027"></a><a class="code" href="db5__index_8h.html#a099e5efd9480bfdad052781c9c1dfbfe">00027</a> <span class="preprocessor">#define DB5_IDX_CODE_ALBUM      0x424c4154 </span><span class="comment">/* &apos;TALB&apos; */</span>
+<a name="l00028"></a>00028 
+<a name="l00029"></a><a class="code" href="db5__index_8h.html#a94727d5bb6d234bd6d62b25807ea2c69">00029</a> <span class="preprocessor">#define DB5_IDX_CODE_GENRE      0x4e4f4354 </span><span class="comment">/* &apos;TCON&apos; */</span>
+<a name="l00030"></a>00030 
+<a name="l00031"></a><a class="code" href="db5__index_8h.html#a5e4418b84ab8846a5a288ca1e4f6411d">00031</a> <span class="preprocessor">#define DB5_IDX_CODE_TITLE      0x32544954 </span><span class="comment">/* &apos;TIT2&apos; */</span>
+<a name="l00032"></a>00032 
+<a name="l00033"></a><a class="code" href="db5__index_8h.html#a2763882b35223e2b33a7caf776cacb8e">00033</a> <span class="preprocessor">#define DB5_IDX_CODE_ARTIST     0x31455054 </span><span class="comment">/* &apos;TPE1&apos; */</span>
+<a name="l00034"></a>00034 
+<a name="l00035"></a><a class="code" href="db5__index_8h.html#ac65f3eaecf932e5ce729710e77bbda1f">00035</a> <span class="preprocessor">#define DB5_IDX_CODE_TRACK      0x4b435254 </span><span class="comment">/* &apos;TRCK&apos; */</span>
+<a name="l00036"></a>00036 
+<a name="l00037"></a><a class="code" href="db5__index_8h.html#a9cca90a021483ad61011cb0f1c702aa7">00037</a> <span class="preprocessor">#define DB5_IDX_CODE_SOURCE     0x43525358 </span><span class="comment">/* &apos;XSRC&apos; */</span>
+<a name="l00038"></a>00038 
+<a name="l00046"></a>00046 <span class="keywordtype">bool</span> <a class="code" href="db5__index_8h.html#a8aa16127c73bbf8d5fb5dae41614ed6c" title="index a column (system)">db5_index_index_column</a>(<span class="keyword">const</span> ptrdiff_t reloffset, <span class="keyword">const</span> <span class="keywordtype">size_t</span> size, <span class="keyword">const</span> uint32_t code);
+<a name="l00047"></a>00047 
+<a name="l00054"></a><a class="code" href="db5__index_8h.html#a6760e97598fc65e0d8b2d9d60cd40549">00054</a> <span class="preprocessor">#define db5_index_colindex(member,code)         db5_index_index_column(offsetof(db5_row,member),membersizeof(db5_row,member),code)</span>
+<a name="l00055"></a>00055 <span class="preprocessor"></span>
+<a name="l00056"></a>00056 <span class="preprocessor">#endif</span>
 </pre></div></div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -92,7 +93,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Jan 5 22:21:10 2010 for db5fuse by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Wed Jan 6 23:00:00 2010 for db5fuse by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

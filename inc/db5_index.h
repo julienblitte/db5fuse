@@ -6,11 +6,12 @@
  */
 #ifndef INC_DB5_IDX_H
 #define INC_DB5_IDX_H
-#include <stdlib.h>
-#include <stdio.h>
 #include <stdbool.h>
-#include <string.h>
+#include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "db5_types.h"
 #include "db5_dat.h"
