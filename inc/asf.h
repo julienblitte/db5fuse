@@ -1,6 +1,6 @@
 /**
  * @file asf.h
- * @brief Source - Header - Asf fi
+ * @brief Source - Header - Asf file format
  * @author Julien Blitte
  * @version 0.1
  */

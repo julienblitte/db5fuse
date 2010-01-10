@@ -27,8 +27,8 @@ build: db5fuse fsck
 db5fuse: $(BIN)/db5fuse
 fsck: $(BIN)/fsck.db5
 
-install: $(BIN)/db5fuse
-	$(XCP) $(BIN)/db5fuse /usr/bin && \
+install: $(BIN)/db5fuse $(BIN)/fsck.db5
+	$(XCP) $(BIN)/db5fuse $(BIN)/fsck.db5 /usr/bin && \
 	$(XCP) tools/* /usr/bin/
 
 $(BIN)/db5fuse: $(obj_common) $(obj_db5) $(obj_audio) $(obj_fuse)
