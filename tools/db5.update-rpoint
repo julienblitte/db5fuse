@@ -1,0 +1,43 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+sub usage
+{
+	print STDERR "Update restore point on a db5 filesystem.\nRestore point is used by media player in case of failure.\n";
+	print STDERR "usage: $0 <hddfilesystem>\n\n";
+	print STDERR "\t<hddfilesystem> is the mounted HDD100/HDD120 fat file system path\n\n";
+	exit 1;
+}
+
+if ( ! defined($ARGV[0]))
+{
+	&usage();
+}
+my $path = $ARGV[0]."/System";
+
+if ( ! -d "$path/DATA")
+{
+	&usage();
+}
+
+chdir($path) || die;
+
+if ( -d "_DATA_2" )
+{
+	print `rm -r _DATA_2`;
+}
+
+if ( -d "_DATA_1" )
+{
+	print `mv _DATA_1 _DATA_2`;
+}
+
+if ( -d "_DATA_" )
+{
+	print `mv _DATA_ _DATA_1`;
+}
+
+print `cp -a "DATA" "_DATA_"`;
+

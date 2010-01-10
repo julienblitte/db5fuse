@@ -1,23 +1,122 @@
 <html>
-<head><title>Db5fuse release notes</title></head>
-<body>
+<head>
+<title>Db5fuse release notes</title>
+	<script language="Javascript">
+	function fill_field()
+	{
+		var username_part1 = "julien";
+		var username_part2 = "blitte";
+		var username_part3 = "users";
+		var domain = "sourceforge.net";
+		var email = username_part1 + username_part2 + '.' + username_part3 + '@' + domain;
+
+		document.getElementById("address").innerHTML = "<a href=\"mailto:" + email + "\">" + email + "</a>";
+	}
+	</script>
+	<style type="text/css">
+		code
+		{
+			background: gray;
+			color: white;
+		}
+		.device
+		{
+			color: purple;
+		}
+		.vfat
+		{
+			color: orange;
+		}
+		.db5
+		{
+			color: green;
+		}
+		.alert
+		{
+			color: red;
+		}
+	</style>
+</head>
+<body onload="fill_field()">
 <h1>Db5fuse release notes</h1>
 <h2>Installing from source</h2>
+<ol>
+<li>Download sources archive file</li>
+<li>Install <strong>libfuse-dev</strong> and <strong>libid3tag0-dev</strong></li>
+<li>Extract archive</li>
+<li>Go into extracted directory, type <code>make</code> and <code>sudo make install</code></li>
+</ol>
+<h2>Installing via dpkg</h2>
 <p>
-Download sources archive file<br/>
-Install <strong>libfuse-dev</strong> and <strong>libid3tag0-dev</strong><br/>
-Extract archive<br/>
-Go into extracted directory, type <code>make</code> and <code>sudo make install</code>.<br/>
-</p>
-<h2>Installing</h2>
-<p>
-Install <strong>libfuse2</strong> and <strong>libid3tag0</strong><br/>
+Download and install packet <strong>db5fuse.deb</strong><br/>
 </p>
 <h2>Mounting filesystem</h2>
+<p class="alert">Warning: mount in the following order: first HDD filesystem and secondly db5 filesystem</p>
+<ol>
+<li>Mount master filesystem; a recent distro should do this automatically, else you can use a command like:</br>
+<code>sudo mount -t vfat -o utf8,uid=$UID <span class="device">/dev/sda1</span> <span class="vfat">/media/HDD100</span></code>
+<sup><a href="#1">1</a> <a href="#2">2</a></sup></li>
+<li>Mount db5 filesystem <span style='text-decoration: underline;'>on an other mount point</span>, using this command:<br/>
+<code>db5fuse <span class="vfat">/media/HDD100</span> <span class="db5">Desktop/my_player</span></code> <sup><a href="#2">2</a> <a href="#3">3</a></sup>
+or <code>db5.mount <span class="db5">Desktop/my_player</span></code> <sup><a href="#3">3</a></sup></li>
+</ol>
+<h2>Unmounting filesystem</h2>
+<p class="alert">Warning: unmount in the following order: first db5 filesystem and secondly HDD filesysten</p>
+<ol>
+<li>Unmount db5 filesystem using this command:<br/>
+<code>fusemount -u <span class="db5">Desktop/my_player</span></code> <sup><a href="#3">3</a></sup>
+or <code>db5.umount</code></li>
+<li>Unmount HDD filesystem.</li>
+</ol>
+<h2>Restore point</h2>
+<p class="alert">Take care before updating restore point that db5 filesystem is fine</p>
 <p>
-System
+Restore point is used by media player when db5 filesystem is broken at boot. In this case, the media player rolls back to last restored point.<br/>
+It's important to have a well-working media player before updating restore point. You can use <strong>fsck.db5</strong> to check db5 filesystem before updating restore point.<br/>
 </p>
-<h2>Reseting harware</h2>
-<h2>contact</h2>
+<p>
+To update restore point, use this command:<br/>
+<code>db5.update-rpoint <span class="vfat">/media/HDD100</span></code> <sup><a href="#2">2</a></sup>
+</p>
+<h2>Force reboot of media player</h2>
+<p>Press <strong>[up]</strong> and <strong>[volume&nbsp;+]</strong> while several seconds to force reboot of media player.</p>
+<h2>Repair a broken filesystem</h2>
+<ol>
+<li>Connect the device to computer</li>
+<li>Unmount device if automatically mounted</li>
+<li>Check fat filesystem: <code>fsck.vfat -a <span class="device">/dev/sda1</span></code> <sup><a href="#1">1</a></sup></li>
+<li>Disconnect and reconnect device</li>
+<li>Mount device if not automatically mounted</li>
+<li>Check db5 filesystem: <code>fsck.db5 -f <span class="vfat">/media/HDD100</span></code> <sup><a href="#2">2</a></sup></li>
+<li>Unmount fat filesystem and disconnect device</li>
+</ol>
+<h2>Contact / support</h2>
+<p>You can contact me at mail address: <span id="address"><em>(enable javascript to see mail address)</em></span></p>
+<h2>Links and references</h2>
+<dl>
+<dt>db5 filesystem</dt>
+<dd><a href="http://solonweb.free.fr/tech.htm">http://solonweb.free.fr/tech.htm</a></dd>
+
+<dt>mp3: id3 tags and mpeg frames</dt>
+<dd><a href="http://mpgedit.org/mpgedit/mpeg_format/mpeghdr.htm#MPEGTAG">http://mpgedit.org/mpgedit/mpeg_format/mpeghdr.htm#MPEGTAG</a><br/>
+<a href="http://mpgedit.org/mpgedit/mpeg_format/mpeghdr.htm#MPEG%20HEADER">http://mpgedit.org/mpgedit/mpeg_format/mpeghdr.htm#MPEG%20HEADER</a></dd>
+
+<dt>fuse: sample code and API</dt>
+<dd><a href="http://fuse.sourceforge.net/">http://fuse.sourceforge.net/</a><br/>
+<a href="http://fuse.sourceforge.net/doxygen/">http://fuse.sourceforge.net/doxygen/</a></dd>
+
+<dt>unicode utf-8</dt>
+<dd><a href="http://en.wikipedia.org/wiki/UTF-8">http://en.wikipedia.org/wiki/UTF-8</a></dd>
+
+<dt>fuse API</dt>
+<dd><a href="http://sourceforge.net/apps/mediawiki/fuse/index.php?title=MediaFileSystems">http://sourceforge.net/apps/mediawiki/fuse/index.php?title=MediaFileSystems</a></dd>
+
+</dl>
+<hr/>
+<p>
+<a name="1"><sup>1</sup></a> where <span class="device">/dev/sda1</span> is device<br/>
+<a name="2"><sup>2</sup></a> where <span class="vfat">/media/HDD100</span> is the HDD mount point<br/>
+<a name="3"><sup>3</sup></a> where <span class="db5">Desktop/my_player</span> is the db5 mount point<br/>
+</p>
 </body>
 </html>
